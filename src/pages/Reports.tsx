@@ -100,57 +100,7 @@ export default function Reports() {
       {/* Footer */}
       <footer className="bg-muted-foreground/20 text-muted-foreground py-16 px-4 sm:px-6 lg:px-8 mt-16">
         <div className="container mx-auto max-w-6xl">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {/* Logo and Description */}
-            <div className="space-y-4">
-              <div className="flex items-center space-x-3">
-                <img src={logo} alt="Nabha Sehat Mitr" className="h-10 w-10 object-contain" />
-                <h3 className="text-xl font-bold">
-                  <span className="text-primary">Nabha</span>
-                  <span className="text-healthcare-green">Sehat</span>
-                  <span className="text-medical-red">Mitr</span>
-                </h3>
-              </div>
-              <p className="text-sm text-black leading-relaxed">
-                Your trusted healthcare companion in Nabha and Punjab. Find doctors, access emergency services, and manage your health records - all in one place.
-              </p>
-            </div>
-
-            {/* Quick Links */}
-            <div className="space-y-4">
-              <h4 className="text-lg font-semibold text-black">Quick Links</h4>
-              <div className="space-y-2">
-                <a href="#" className="block text-sm text-black hover:text-healthcare-green transition-smooth">
-                  About Us
-                </a>
-                <a href="#" className="block text-sm text-black hover:text-healthcare-green transition-smooth">
-                  Terms & Conditions
-                </a>
-                <a href="#" className="block text-sm text-black hover:text-healthcare-green transition-smooth">
-                  Privacy Policy
-                </a>
-                <a href="#" className="block text-sm text-black hover:text-healthcare-green transition-smooth">
-                  Help & Support
-                </a>
-              </div>
-            </div>
-
-            {/* Contact Info */}
-            <div className="space-y-4">
-              <h4 className="text-lg font-semibold text-black">Contact Info</h4>
-              <div className="space-y-3">
-                <div className="flex items-center space-x-3">
-                  <span className="text-sm text-black">+91 8800852822, +91 9899489078</span>
-                </div>
-                <div className="flex items-center space-x-3">
-                  <span className="text-sm text-black">daamn32322@gmail.com</span>
-                </div>
-                <div className="flex items-center space-x-3">
-                  <span className="text-sm text-black">Chennai, Tamil Nadu, India</span>
-                </div>
-              </div>
-            </div>
-          </div>
+          
 
           <div className="border-t border-muted-foreground/20 mt-12 pt-8">
             <div className="text-center text-sm text-black">
