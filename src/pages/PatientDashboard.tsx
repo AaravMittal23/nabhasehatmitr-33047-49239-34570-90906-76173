@@ -374,10 +374,7 @@ export default function PatientDashboard() {
                       <p className="text-sm font-medium text-blue-800">Appointment Reminder</p>
                       <p className="text-xs text-blue-600">Dr. Meera Sharma - Tomorrow 10:00 AM</p>
                     </div>
-                    <div className="p-3 bg-red-50 border border-red-200 rounded-lg">
-                      <p className="text-sm font-medium text-red-800">Low Stock Alert</p>
-                      <p className="text-xs text-red-600">Lisinopril - Only 8 days left</p>
-                    </div>
+                    
                   </div>
                 </CardContent>
               </Card>
