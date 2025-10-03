@@ -266,11 +266,10 @@ export default function ContactUs() {
             {/* Logo and Description */}
             <div className="space-y-4">
               <div className="flex items-center space-x-3">
-                <img src={logo} alt="Nabha Sehat Mitr" className="h-10 w-10 object-contain" />
+                <img src={logo} alt="Health Connect" className="h-10 w-10 object-contain" />
                 <h3 className="text-xl font-bold">
-                  <span className="text-primary">Nabha</span>
-                  <span className="text-healthcare-green">Sehat</span>
-                  <span className="text-medical-red">Mitr</span>
+                  <span className="text-primary">Health</span>
+                  <span className="text-healthcare-green">Connect</span>
                 </h3>
               </div>
               <p className="text-sm text-black leading-relaxed">
