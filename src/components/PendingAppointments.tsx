@@ -75,7 +75,7 @@ export const PendingAppointments = () => {
           <CardContent className="p-6">
             <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
               <div className="space-y-3 flex-1">
-                <div className="flex items-start justify-between">
+                <div className="flex items-center justify-between">
                   <div>
                     <h4 className="font-semibold text-lg">{appointment.doctorName}</h4>
                     <p className="text-sm text-muted-foreground">{appointment.specialty}</p>
