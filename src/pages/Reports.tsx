@@ -51,9 +51,9 @@ export default function Reports() {
     currentLanguage,
     changeLanguage
   } = useLanguage();
-  return <div className="min-h-screen bg-reports-cream font-poppins">
+  return <div className="min-h-screen bg-background font-poppins">
       {/* Subtle gradient at top */}
-      <div className="absolute top-0 left-0 right-0 h-48 bg-gradient-to-b from-healthcare-green/10 to-transparent pointer-events-none"></div>
+      <div className="absolute top-0 left-0 right-0 h-48 bg-gradient-to-b from-healthcare-green/5 to-transparent pointer-events-none"></div>
       
       <Header currentLanguage={currentLanguage} onLanguageChange={changeLanguage} showCenterLogo={true} />
 
@@ -70,7 +70,7 @@ export default function Reports() {
 
           {/* Reports Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-            {reports.map(report => <Card key={report.id} className="bg-reports-card border-reports-card-border border-2 rounded-3xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 p-8">
+            {reports.map(report => <Card key={report.id} className="bg-card border-border border shadow-md hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 p-8 rounded-xl">
                 <CardContent className="p-0 space-y-6">
                   {/* Report Name with Document Icon */}
                   <div className="flex items-center justify-center space-x-3">
@@ -82,11 +82,11 @@ export default function Reports() {
 
                   {/* Buttons */}
                   <div className="flex gap-4 justify-center pt-4">
-                    <Button onClick={() => handleViewReport(report)} className="bg-reports-view hover:bg-reports-view/90 text-white px-8 py-3 rounded-full font-medium font-poppins flex-1 max-w-[140px] transition-all duration-300 hover:shadow-lg hover:shadow-healthcare-green/25 transform hover:-translate-y-0.5" aria-label={`View report for ${report.patientName}`}>
+                    <Button onClick={() => handleViewReport(report)} className="bg-healthcare-green hover:bg-healthcare-green/80 text-white px-8 py-3 rounded-full font-medium font-poppins flex-1 max-w-[140px] transition-all duration-300 hover:shadow-md transform hover:-translate-y-0.5" aria-label={`View report for ${report.patientName}`}>
                       <Eye className="h-4 w-4 mr-2" />
                       View
                     </Button>
-                    <Button onClick={() => handleDownloadReport(report)} className="bg-reports-download hover:bg-reports-download/90 text-white px-8 py-3 rounded-full font-medium font-poppins flex-1 max-w-[140px] transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/25 transform hover:-translate-y-0.5" aria-label={`Download report for ${report.patientName}`}>
+                    <Button onClick={() => handleDownloadReport(report)} className="bg-primary hover:bg-primary/90 text-white px-8 py-3 rounded-full font-medium font-poppins flex-1 max-w-[140px] transition-all duration-300 hover:shadow-md transform hover:-translate-y-0.5" aria-label={`Download report for ${report.patientName}`}>
                       <Download className="h-4 w-4 mr-2" />
                       Download
                     </Button>
