@@ -358,13 +358,10 @@ export default function FindDoctor() {
               <h3 className="text-xl font-bold">
                 <span style={{
                 color: '#0B2A4A'
-              }}>Nabha</span>
+              }}>Health</span>
                 <span style={{
                 color: '#45A06B'
-              }}>Sehat</span>
-                <span style={{
-                color: '#D04B42'
-              }}>Mitr</span>
+              }}>Connect</span>
               </h3>
               <p className="text-sm text-black leading-relaxed">
                 Your trusted healthcare companion providing comprehensive medical services in Nabha and Punjab.
