@@ -238,13 +238,7 @@ export default function PatientDashboard() {
                           <Edit className="h-4 w-4 text-muted-foreground" />
                         </div>
                       </div>
-                      <div className="md:col-span-2">
-                        <label className="text-sm font-medium text-muted-foreground">Address (editable)</label>
-                        <div className="flex items-start gap-2 mt-1">
-                          <Textarea value={patientData.address} onChange={e => handleProfileUpdate('address', e.target.value)} className="min-h-[60px]" />
-                          <Edit className="h-4 w-4 text-muted-foreground mt-2" />
-                        </div>
-                      </div>
+                      
                     </div>
                   </div>
                   <div className="mt-4 pt-4 border-t">
