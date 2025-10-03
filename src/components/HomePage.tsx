@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Stethoscope, AlertTriangle, Pill, FileText, MapPin, Phone, Mail, Clock } from "lucide-react";
+import { Stethoscope, AlertTriangle, Pill, FileText, MapPin, Phone, Mail, Clock, Calendar } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -24,14 +24,17 @@ const homepageTranslations = {
     emergencyTitle: "Emergency Services",
     pharmacyTitle: "Pharmacies",
     healthRecordsTitle: "Health Records",
+    calendarTitle: "Calendar",
     findDoctorsDescription: "Connect with verified doctors and specialists for consultations and medical advice.",
     emergencyDescription: "Get immediate help for medical emergencies and urgent health situations.",
     pharmacyDescription: "Find nearby pharmacies and check medicine availability in your area.",
     healthRecordsDescription: "Access and manage your medical records, prescriptions, and health reports.",
+    calendarDescription: "View and manage your appointments, lab tests, and health events in one place.",
     findDoctorsCta: "Book Appointment",
     emergencyCta: "Emergency",
     pharmacyCta: "Locate Nearby Pharmacy",
     healthRecordsCta: "Health Records",
+    calendarCta: "View Calendar",
     currentDateTime: "Current Date & Time",
     contactInfo: "Contact Information",
     quickLinks: "Quick Links",
@@ -52,14 +55,17 @@ const homepageTranslations = {
     emergencyTitle: "आपातकालीन सेवाएँ",
     pharmacyTitle: "फार्मेसियां",
     healthRecordsTitle: "स्वास्थ्य रिकॉर्ड",
+    calendarTitle: "कैलेंडर",
     findDoctorsDescription: "सत्यापित डॉक्टरों और विशेषज्ञों से परामर्श और चिकित्सा सलाह के लिए जुड़ें।",
     emergencyDescription: "चिकित्सा आपातकाल और तत्काल स्वास्थ्य स्थितियों के लिए तुरंत सहायता प्राप्त करें।",
     pharmacyDescription: "नज़दीकी फार्मेसियां खोजें और अपने क्षेत्र में दवाओं की उपलब्धता जांचें।",
     healthRecordsDescription: "अपने चिकित्सा रिकॉर्ड, नुस्खे और स्वास्थ्य रिपोर्ट तक पहुंचें और प्रबंधित करें।",
+    calendarDescription: "अपने अपॉइंटमेंट, लैब टेस्ट और स्वास्थ्य इवेंट्स को एक जगह देखें और प्रबंधित करें।",
     findDoctorsCta: "अपॉइंटमेंट बुक करें",
     emergencyCta: "आपातकाल",
     pharmacyCta: "नज़दीकी फ़ार्मेसी खोजें",
     healthRecordsCta: "रिपोर्ट्स/रिपोर्ट देखें",
+    calendarCta: "कैलेंडर देखें",
     currentDateTime: "वर्तमान दिनांक और समय",
     contactInfo: "संपर्क जानकारी",
     quickLinks: "त्वरित लिंक",
@@ -80,14 +86,17 @@ const homepageTranslations = {
     emergencyTitle: "ਐਮਰਜੈਂਸੀ ਸੇਵਾਵਾਂ",
     pharmacyTitle: "ਫਾਰਮੇਸੀ",
     healthRecordsTitle: "ਸਿਹਤ ਰਿਕਾਰਡ",
+    calendarTitle: "ਕੈਲੰਡਰ",
     findDoctorsDescription: "ਪਰਾਮਰਸ਼ ਅਤੇ ਡਾਕਟਰੀ ਸਲਾਹ ਲਈ ਪ੍ਰਮਾਣਿਤ ਡਾਕਟਰਾਂ ਅਤੇ ਮਾਹਿਰਾਂ ਨਾਲ ਜੁੜੋ।",
     emergencyDescription: "ਮੈਡੀਕਲ ਐਮਰਜੈਂਸੀ ਅਤੇ ਤੁਰੰਤ ਸਿਹਤ ਸਥਿਤੀਆਂ ਲਈ ਤੁਰੰਤ ਮਦਦ ਪ੍ਰਾਪਤ ਕਰੋ।",
     pharmacyDescription: "ਨਜ਼ਦੀਕੀ ਫਾਰਮੇਸੀ ਲੱਭੋ ਅਤੇ ਆਪਣੇ ਖੇਤਰ ਵਿੱਚ ਦਵਾਈਆਂ ਦੀ ਉਪਲਬਧਤਾ ਚੈੱਕ ਕਰੋ।",
     healthRecordsDescription: "ਆਪਣੇ ਮੈਡੀਕਲ ਰਿਕਾਰਡ, ਨੁਸਖੇ ਅਤੇ ਸਿਹਤ ਰਿਪੋਰਟਾਂ ਤੱਕ ਪਹੁੰਚ ਕਰੋ ਅਤੇ ਪ੍ਰਬੰਧ ਕਰੋ।",
+    calendarDescription: "ਆਪਣੇ ਅਪਾਇੰਟਮੈਂਟ, ਲੈਬ ਟੈਸਟ ਅਤੇ ਸਿਹਤ ਈਵੈਂਟਸ ਨੂੰ ਇੱਕ ਥਾਂ ਤੇ ਵੇਖੋ ਅਤੇ ਪ੍ਰਬੰਧ ਕਰੋ।",
     findDoctorsCta: "ਅਪਾਇੰਟਮੈਂਟ ਬੁੱਕ ਕਰੋ",
     emergencyCta: "ਐਮਰਜੈਂਸੀ",
     pharmacyCta: "ਨੇੜੇ ਦੀਆਂ ਫਾਰਮੇਸੀ ਲੱਭੋ",
     healthRecordsCta: "ਰਿਪੋਰਟਸ/ਡਾਉਨਲੋਡ",
+    calendarCta: "ਕੈਲੰਡਰ ਵੇਖੋ",
     currentDateTime: "ਮੌਜੂਦਾ ਮਿਤੀ ਅਤੇ ਸਮਾਂ",
     contactInfo: "ਸੰਪਰਕ ਜਾਣਕਾਰੀ",
     quickLinks: "ਤੁਰੰਤ ਲਿੰਕਸ",
@@ -193,12 +202,14 @@ export function HomePage() {
         {/* Services Grid */}
         <section className="py-20 px-4 sm:px-6 lg:px-8 bg-muted/30">
           <div className="container mx-auto max-w-6xl">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               <ServiceCard icon={Stethoscope} title={t.findDoctorsTitle} description={t.findDoctorsDescription} buttonText={t.findDoctorsCta} onClick={() => navigate('/find-doctor')} />
               
               <ServiceCard icon={AlertTriangle} title={t.emergencyTitle} description={t.emergencyDescription} buttonText={t.emergencyCta} onClick={() => navigate('/emergency')} variant="emergency" />
               
               <ServiceCard icon={FileText} title={t.healthRecordsTitle} description={t.healthRecordsDescription} buttonText={t.healthRecordsCta} onClick={() => navigate('/reports')} variant="health-records" />
+              
+              <ServiceCard icon={Calendar} title={t.calendarTitle} description={t.calendarDescription} buttonText={t.calendarCta} onClick={() => navigate('/calendar')} />
             </div>
           </div>
         </section>
