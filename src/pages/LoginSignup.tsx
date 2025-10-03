@@ -1,255 +1,248 @@
-// src/pages/LoginSignup.tsx
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Calendar } from "@/components/ui/calendar";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { Textarea } from "@/components/ui/textarea";
-import { CalendarIcon } from "lucide-react";
-import { format } from "date-fns";
-import { cn } from "@/lib/utils";
 import { Header } from "@/components/Header";
 import { useLanguage } from "@/hooks/useLanguage";
+import { useToast } from "@/hooks/use-toast";
 import logo from "@/assets/logo.jpg";
-import { useNavigate } from "react-router-dom";
-import API from "@/lib/api";
-
-interface FormData {
-  fullName: string;
-  dateOfBirth: Date | undefined;
-  gender: string;
-  address: string;
-  emergencyContact?: string;
-  email?: string;
-  department?: string;
-  hospital?: string;
-  licenseNumber?: string;
-}
 
 export default function LoginSignup() {
   const { currentLanguage, changeLanguage } = useLanguage();
   const navigate = useNavigate();
-  const [phoneNumber, setPhoneNumber] = useState("");
-  const [isOtpOpen, setIsOtpOpen] = useState(false);
-  const [isRoleOpen, setIsRoleOpen] = useState(false);
-  const [isPatientRegOpen, setIsPatientRegOpen] = useState(false);
-  const [isDoctorRegOpen, setIsDoctorRegOpen] = useState(false);
-  const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
-  const [otp, setOtp] = useState("");
-  const [selectedRole, setSelectedRole] = useState<"patient" | "doctor" | "">("");
-  const [confirmationMessage, setConfirmationMessage] = useState("");
-  const [formData, setFormData] = useState<FormData>({
-    fullName: "",
-    dateOfBirth: undefined,
-    gender: "",
-    address: "",
-    emergencyContact: "",
-    email: "",
-    department: "",
-    hospital: "",
-    licenseNumber: ""
-  });
+  const { toast } = useToast();
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  
+  // Login form
+  const [loginEmail, setLoginEmail] = useState("");
+  const [loginPassword, setLoginPassword] = useState("");
+  
+  // Signup form
+  const [signupEmail, setSignupEmail] = useState("");
+  const [signupPassword, setSignupPassword] = useState("");
+  const [signupRole, setSignupRole] = useState<"patient" | "doctor">("patient");
 
-  // Request OTP from backend
-  const handleGetOtp = async () => {
-    setError(null);
-    if (phoneNumber.length !== 10) {
-      setError("Please enter a valid 10-digit phone number.");
-      return;
-    }
-    setLoading(true);
-    try {
-      // example: POST /auth/request-otp { phone: '1234567890' }
-      await API.post("/auth/request-otp", { phone: phoneNumber });
-      // server may return { ok: true } or nothing; open OTP dialog regardless
-      setIsOtpOpen(true);
-    } catch (err: any) {
-      console.error("request-otp error:", err);
-      setError(err?.response?.data?.error || err?.message || "Failed to request OTP");
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  // Verify OTP with backend; on success, server may return JWT
-  const handleVerifyOtp = async () => {
-    setError(null);
-    if (otp.length !== 6) {
-      setError("Please enter the 6-digit OTP.");
-      return;
-    }
-    setLoading(true);
-    try {
-      // example: POST /auth/verify-otp { phone, otp }
-      const res = await API.post("/auth/verify-otp", { phone: phoneNumber, otp });
-      const token = res?.data?.token ?? res?.data?.accessToken ?? null;
-      const role = res?.data?.role ?? null; // backend may return role
-      if (token) {
-        localStorage.setItem("token", token);
-      }
-      // close OTP dialog
-      setIsOtpOpen(false);
-      setOtp("");
-      // if backend returned role, navigate accordingly
-      if (role === "doctor") {
-        navigate("/doctor-dashboard");
-        return;
-      } else if (role === "patient") {
-        navigate("/patient-dashboard");
-        return;
-      }
-      // otherwise open role selection
-      setIsRoleOpen(true);
-    } catch (err: any) {
-      console.error("verify-otp error:", err);
-      setError(err?.response?.data?.error || err?.message || "OTP verification failed");
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleRoleSelection = (role: "patient" | "doctor") => {
-    setSelectedRole(role);
-    setIsRoleOpen(false);
-    if (role === "patient") {
-      setIsPatientRegOpen(true);
-    } else {
-      setIsDoctorRegOpen(true);
-    }
-  };
-
-  // Register patient via backend API
-  const handlePatientRegistration = async () => {
-    setError(null);
-    if (!formData.fullName || !formData.dateOfBirth || !formData.gender || !formData.address) {
-      setError("Please fill all required patient fields.");
-      return;
-    }
-    setLoading(true);
-    try {
-      const payload = {
-        fullName: formData.fullName,
-        dateOfBirth: formData.dateOfBirth?.toISOString(),
-        gender: formData.gender,
-        address: formData.address,
-        emergencyContact: formData.emergencyContact,
-        email: formData.email,
-        phone: phoneNumber
-      };
-      // example endpoint: POST /patients
-      const res = await API.post("/patients", payload);
-      // if backend returns token on registration, save and navigate
-      const token = res?.data?.token ?? null;
-      if (token) {
-        localStorage.setItem("token", token);
-      }
-      setIsPatientRegOpen(false);
-      setConfirmationMessage("Account created — pending verification. You can continue to the dashboard as a guest.");
-      setIsConfirmationOpen(true);
-    } catch (err: any) {
-      console.error("patient registration error:", err);
-      setError(err?.response?.data?.error || err?.message || "Patient registration failed");
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  // Register doctor via backend API
-  const handleDoctorRegistration = async () => {
-    setError(null);
-    if (
-      !formData.fullName ||
-      !formData.dateOfBirth ||
-      !formData.gender ||
-      !formData.address ||
-      !formData.department ||
-      !formData.hospital ||
-      !formData.licenseNumber
-    ) {
-      setError("Please fill all required doctor fields.");
-      return;
-    }
-    setLoading(true);
-    try {
-      const payload = {
-        fullName: formData.fullName,
-        dateOfBirth: formData.dateOfBirth?.toISOString(),
-        gender: formData.gender,
-        address: formData.address,
-        department: formData.department,
-        hospital: formData.hospital,
-        licenseNumber: formData.licenseNumber,
-        email: formData.email,
-        phone: phoneNumber
-      };
-      // example endpoint: POST /doctors
-      const res = await API.post("/doctors", payload);
-      const token = res?.data?.token ?? null;
-      if (token) {
-        localStorage.setItem("token", token);
-      }
-      setIsDoctorRegOpen(false);
-      setConfirmationMessage("Application submitted — pending verification. You can continue to the dashboard as a guest.");
-      setIsConfirmationOpen(true);
-    } catch (err: any) {
-      console.error("doctor registration error:", err);
-      setError(err?.response?.data?.error || err?.message || "Doctor registration failed");
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleDemoPatient = () => {
-    // Navigate to patient dashboard with demo data
-    navigate("/patient-dashboard", {
-      state: {
-        user: {
-          name: "Aman Singh",
-          dob: "12/03/1998",
-          gender: "Male",
-          address: "Nabha, Punjab",
-          phone: "1234567890"
+  useEffect(() => {
+    // Check if already logged in
+    const checkAuth = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session) {
+        // Get user role
+        const { data: roleData } = await (supabase as any)
+          .from('user_roles')
+          .select('role')
+          .eq('user_id', session.user.id)
+          .single();
+        
+        if (roleData?.role === 'doctor') {
+          navigate('/doctor-dashboard');
+        } else {
+          navigate('/patient-dashboard');
         }
       }
-    });
-  };
+    };
+    checkAuth();
+  }, [navigate]);
 
-  const handleDemoDoctor = () => {
-    // Navigate to doctor dashboard with demo data
-    navigate("/doctor-dashboard", {
-      state: {
-        user: {
-          name: "Dr. Meera Sharma",
-          dob: "05/07/1985",
-          gender: "Female",
-          department: "General Medicine",
-          hospital: "Nabha Civil Hospital",
-          licenseNo: "DOC12345",
-          phone: "0000000000"
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+
+    try {
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email: loginEmail,
+        password: loginPassword,
+      });
+
+      if (error) throw error;
+
+      if (data.user) {
+        // Get user role
+        const { data: roleData } = await (supabase as any)
+          .from('user_roles')
+          .select('role')
+          .eq('user_id', data.user.id)
+          .single();
+
+        toast({
+          title: "Login successful",
+          description: "Welcome back!",
+        });
+
+        // Navigate based on role
+        if (roleData?.role === 'doctor') {
+          navigate('/doctor-dashboard');
+        } else {
+          navigate('/patient-dashboard');
         }
       }
-    });
+    } catch (error: any) {
+      toast({
+        title: "Login failed",
+        description: error.message,
+        variant: "destructive",
+      });
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const resetForm = () => {
-    setFormData({
-      fullName: "",
-      dateOfBirth: undefined,
-      gender: "",
-      address: "",
-      emergencyContact: "",
-      email: "",
-      department: "",
-      hospital: "",
-      licenseNumber: ""
-    });
-    setError(null);
+  const handleSignup = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+
+    try {
+      // Sign up the user
+      const { data, error } = await supabase.auth.signUp({
+        email: signupEmail,
+        password: signupPassword,
+        options: {
+          emailRedirectTo: `${window.location.origin}/`,
+        },
+      });
+
+      if (error) throw error;
+
+      if (data.user) {
+        // Insert user role
+        const { error: roleError } = await (supabase as any)
+          .from('user_roles')
+          .insert({
+            user_id: data.user.id,
+            role: signupRole,
+          });
+
+        if (roleError) {
+          console.error('Error creating role:', roleError);
+        }
+
+        toast({
+          title: "Account created successfully",
+          description: "You can now log in with your credentials.",
+        });
+
+        // Switch to login tab
+        setLoginEmail(signupEmail);
+        setLoginPassword(signupPassword);
+      }
+    } catch (error: any) {
+      toast({
+        title: "Signup failed",
+        description: error.message,
+        variant: "destructive",
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleDemoPatient = async () => {
+    setLoading(true);
+    try {
+      // Demo patient login
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email: "patient@demo.com",
+        password: "demo123456",
+      });
+
+      if (error) {
+        // Create demo patient if doesn't exist
+        const { data: signupData, error: signupError } = await supabase.auth.signUp({
+          email: "patient@demo.com",
+          password: "demo123456",
+          options: {
+            emailRedirectTo: `${window.location.origin}/`,
+          },
+        });
+
+        if (signupError) throw signupError;
+
+        if (signupData.user) {
+          await (supabase as any).from('user_roles').insert({
+            user_id: signupData.user.id,
+            role: 'patient',
+          });
+        }
+
+        toast({
+          title: "Demo account created",
+          description: "Logging in...",
+        });
+
+        // Try logging in again
+        await supabase.auth.signInWithPassword({
+          email: "patient@demo.com",
+          password: "demo123456",
+        });
+      }
+
+      navigate('/patient-dashboard');
+    } catch (error: any) {
+      toast({
+        title: "Demo login failed",
+        description: error.message,
+        variant: "destructive",
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleDemoDoctor = async () => {
+    setLoading(true);
+    try {
+      // Demo doctor login
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email: "doctor@demo.com",
+        password: "demo123456",
+      });
+
+      if (error) {
+        // Create demo doctor if doesn't exist
+        const { data: signupData, error: signupError } = await supabase.auth.signUp({
+          email: "doctor@demo.com",
+          password: "demo123456",
+          options: {
+            emailRedirectTo: `${window.location.origin}/`,
+          },
+        });
+
+        if (signupError) throw signupError;
+
+        if (signupData.user) {
+          await (supabase as any).from('user_roles').insert({
+            user_id: signupData.user.id,
+            role: 'doctor',
+          });
+        }
+
+        toast({
+          title: "Demo account created",
+          description: "Logging in...",
+        });
+
+        // Try logging in again
+        await supabase.auth.signInWithPassword({
+          email: "doctor@demo.com",
+          password: "demo123456",
+        });
+      }
+
+      navigate('/doctor-dashboard');
+    } catch (error: any) {
+      toast({
+        title: "Demo login failed",
+        description: error.message,
+        variant: "destructive",
+      });
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -262,373 +255,134 @@ export default function LoginSignup() {
       />
 
       <div className="flex items-center justify-center p-4 py-12">
-        <Card className="w-full max-w-lg bg-white rounded-xl shadow-lg">
+        <Card className="w-full max-w-lg">
           <CardHeader className="text-center pt-8 pb-6">
             <div className="flex justify-center mb-4">
               <img src={logo} alt="NabhaSehatMitr Logo" className="h-16 w-16 object-cover rounded-full" />
             </div>
-            <h1 className="text-2xl font-bold text-gray-900 mb-2">Welcome to NABHASEHATMITR</h1>
-            <p className="text-gray-600">Enter your phone number to continue</p>
+            <h1 className="text-2xl font-bold mb-2">Welcome to NABHASEHATMITR</h1>
+            <p className="text-muted-foreground">Login or create an account to continue</p>
           </CardHeader>
 
           <CardContent className="space-y-6 px-8 pb-8">
-            <div className="space-y-4">
-              <div>
-                <Label htmlFor="phone">Phone Number</Label>
-                <div className="flex mt-2">
-                  <div className="flex items-center px-3 border border-r-0 rounded-l-md bg-gray-50">
-                    <span className="text-sm text-gray-600">+91</span>
+            <Tabs defaultValue="login" className="w-full">
+              <TabsList className="grid w-full grid-cols-2">
+                <TabsTrigger value="login">Login</TabsTrigger>
+                <TabsTrigger value="signup">Sign Up</TabsTrigger>
+              </TabsList>
+
+              <TabsContent value="login" className="space-y-4 mt-4">
+                <form onSubmit={handleLogin} className="space-y-4">
+                  <div>
+                    <Label htmlFor="login-email">Email</Label>
+                    <Input
+                      id="login-email"
+                      type="email"
+                      placeholder="Enter your email"
+                      value={loginEmail}
+                      onChange={(e) => setLoginEmail(e.target.value)}
+                      required
+                      className="mt-1"
+                    />
                   </div>
-                  <Input
-                    id="phone"
-                    type="tel"
-                    placeholder="Enter 10-digit number"
-                    value={phoneNumber}
-                    onChange={(e) => setPhoneNumber(e.target.value.replace(/\D/g, '').slice(0, 10))}
-                    className="flex-1 rounded-l-none border-l-0"
-                  />
-                </div>
-                {phoneNumber && phoneNumber.length !== 10 && (
-                  <p className="text-sm text-red-600 mt-1">Please enter exactly 10 digits</p>
-                )}
-              </div>
 
-              <div>
-                <Button
-                  onClick={handleGetOtp}
-                  disabled={phoneNumber.length !== 10 || loading}
-                  className="w-full bg-[#14213D] hover:bg-[#14213D]/90 text-white"
-                >
-                  {loading ? "Please wait..." : "Get OTP"}
-                </Button>
-              </div>
+                  <div>
+                    <Label htmlFor="login-password">Password</Label>
+                    <Input
+                      id="login-password"
+                      type="password"
+                      placeholder="Enter your password"
+                      value={loginPassword}
+                      onChange={(e) => setLoginPassword(e.target.value)}
+                      required
+                      className="mt-1"
+                    />
+                  </div>
 
-              {error && <div className="text-sm text-red-600 mt-2">{error}</div>}
-            </div>
+                  <Button
+                    type="submit"
+                    disabled={loading}
+                    className="w-full"
+                  >
+                    {loading ? "Logging in..." : "Login"}
+                  </Button>
+                </form>
+              </TabsContent>
+
+              <TabsContent value="signup" className="space-y-4 mt-4">
+                <form onSubmit={handleSignup} className="space-y-4">
+                  <div>
+                    <Label htmlFor="signup-email">Email</Label>
+                    <Input
+                      id="signup-email"
+                      type="email"
+                      placeholder="Enter your email"
+                      value={signupEmail}
+                      onChange={(e) => setSignupEmail(e.target.value)}
+                      required
+                      className="mt-1"
+                    />
+                  </div>
+
+                  <div>
+                    <Label htmlFor="signup-password">Password</Label>
+                    <Input
+                      id="signup-password"
+                      type="password"
+                      placeholder="Create a password (min 6 characters)"
+                      value={signupPassword}
+                      onChange={(e) => setSignupPassword(e.target.value)}
+                      required
+                      minLength={6}
+                      className="mt-1"
+                    />
+                  </div>
+
+                  <div>
+                    <Label htmlFor="role">I am a</Label>
+                    <Select value={signupRole} onValueChange={(value: any) => setSignupRole(value)}>
+                      <SelectTrigger className="mt-1">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="patient">Patient</SelectItem>
+                        <SelectItem value="doctor">Doctor</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+                  <Button
+                    type="submit"
+                    disabled={loading}
+                    className="w-full"
+                  >
+                    {loading ? "Creating account..." : "Sign Up"}
+                  </Button>
+                </form>
+              </TabsContent>
+            </Tabs>
 
             <div className="space-y-3 pt-4 border-t">
-              <p className="text-sm text-gray-500 text-center">Demo Accounts:</p>
-              <Button variant="outline" onClick={handleDemoPatient} className="w-full text-sm">
-                Demo: Login as Patient (1234567890)
+              <p className="text-sm text-muted-foreground text-center">Quick Demo Access:</p>
+              <Button 
+                variant="outline" 
+                onClick={handleDemoPatient} 
+                disabled={loading}
+                className="w-full text-sm"
+              >
+                Demo: Login as Patient
               </Button>
-              <Button variant="outline" onClick={handleDemoDoctor} className="w-full text-sm">
-                Demo: Login as Doctor (0000000000)
+              <Button 
+                variant="outline" 
+                onClick={handleDemoDoctor} 
+                disabled={loading}
+                className="w-full text-sm"
+              >
+                Demo: Login as Doctor
               </Button>
             </div>
           </CardContent>
         </Card>
-
-        {/* OTP Dialog */}
-        <Dialog open={isOtpOpen} onOpenChange={setIsOtpOpen}>
-          <DialogContent className="sm:max-w-md">
-            <DialogHeader>
-              <DialogTitle>Enter OTP</DialogTitle>
-            </DialogHeader>
-            <div className="space-y-4">
-              <p className="text-sm text-gray-600">Enter 6-digit OTP (demo: any OTP works)</p>
-              <Input
-                type="tel"
-                placeholder="000000"
-                value={otp}
-                onChange={(e) => setOtp(e.target.value.replace(/\D/g, '').slice(0, 6))}
-                className="text-center text-xl tracking-widest"
-              />
-              <div className="flex space-x-3">
-                <Button
-                  onClick={handleVerifyOtp}
-                  disabled={otp.length !== 6 || loading}
-                  className="flex-1 bg-[#14213D] hover:bg-[#14213D]/90"
-                >
-                  {loading ? "Verifying..." : "Verify"}
-                </Button>
-                <Button variant="outline" onClick={() => setIsOtpOpen(false)} className="flex-1">
-                  Cancel
-                </Button>
-              </div>
-            </div>
-          </DialogContent>
-        </Dialog>
-
-        {/* Role Selection Dialog */}
-        <Dialog open={isRoleOpen} onOpenChange={setIsRoleOpen}>
-          <DialogContent className="sm:max-w-md">
-            <DialogHeader>
-              <DialogTitle>Choose Your Role</DialogTitle>
-            </DialogHeader>
-            <div className="space-y-3">
-              <Button onClick={() => handleRoleSelection("patient")} className="w-full bg-[#14213D] hover:bg-[#14213D]/90">
-                I am a Patient
-              </Button>
-              <Button onClick={() => handleRoleSelection("doctor")} variant="outline" className="w-full">
-                I am a Doctor
-              </Button>
-            </div>
-          </DialogContent>
-        </Dialog>
-
-        {/* Patient Registration Dialog */}
-        <Dialog
-          open={isPatientRegOpen}
-          onOpenChange={(open) => {
-            setIsPatientRegOpen(open);
-            if (!open) resetForm();
-          }}
-        >
-          <DialogContent className="sm:max-w-lg max-h-[90vh] overflow-y-auto">
-            <DialogHeader>
-              <DialogTitle>Patient Registration</DialogTitle>
-            </DialogHeader>
-            <div className="space-y-4">
-              <div>
-                <Label htmlFor="fullName">Full Name *</Label>
-                <Input
-                  id="fullName"
-                  value={formData.fullName}
-                  onChange={(e) => setFormData({...formData, fullName: e.target.value})}
-                  className="mt-1"
-                />
-              </div>
-
-              <div>
-                <Label>Date of Birth *</Label>
-                <Popover>
-                  <PopoverTrigger asChild>
-                    <Button
-                      variant="outline"
-                      className={cn(
-                        "w-full justify-start text-left font-normal mt-1",
-                        !formData.dateOfBirth && "text-muted-foreground"
-                      )}
-                    >
-                      <CalendarIcon className="mr-2 h-4 w-4" />
-                      {formData.dateOfBirth ? format(formData.dateOfBirth, "PPP") : "Pick a date"}
-                    </Button>
-                  </PopoverTrigger>
-                  <PopoverContent className="w-auto p-0">
-                    <div className="p-3 pointer-events-auto">
-                      <Calendar
-                        mode="single"
-                        selected={formData.dateOfBirth}
-                        onSelect={(date) => setFormData({...formData, dateOfBirth: date})}
-                        initialFocus
-                      />
-                    </div>
-                  </PopoverContent>
-                </Popover>
-              </div>
-
-              <div>
-                <Label>Gender *</Label>
-                <Select value={formData.gender} onValueChange={(value) => setFormData({...formData, gender: value})}>
-                  <SelectTrigger className="mt-1">
-                    <SelectValue placeholder="Select gender" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="Male">Male</SelectItem>
-                    <SelectItem value="Female">Female</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-
-              <div>
-                <Label htmlFor="address">Address *</Label>
-                <Textarea
-                  id="address"
-                  value={formData.address}
-                  onChange={(e) => setFormData({...formData, address: e.target.value})}
-                  className="mt-1"
-                  rows={3}
-                />
-              </div>
-
-              <div>
-                <Label htmlFor="emergencyContact">Emergency Contact (Optional)</Label>
-                <Input
-                  id="emergencyContact"
-                  value={formData.emergencyContact}
-                  onChange={(e) => setFormData({...formData, emergencyContact: e.target.value})}
-                  className="mt-1"
-                />
-              </div>
-
-              <div>
-                <Label htmlFor="email">Email (Optional)</Label>
-                <Input
-                  id="email"
-                  type="email"
-                  value={formData.email}
-                  onChange={(e) => setFormData({...formData, email: e.target.value})}
-                  className="mt-1"
-                />
-              </div>
-
-              <Button
-                onClick={handlePatientRegistration}
-                disabled={!formData.fullName || !formData.dateOfBirth || !formData.gender || !formData.address || loading}
-                className="w-full bg-[#14213D] hover:bg-[#14213D]/90"
-              >
-                {loading ? "Submitting..." : "Create Account"}
-              </Button>
-            </div>
-          </DialogContent>
-        </Dialog>
-
-        {/* Doctor Registration Dialog */}
-        <Dialog
-          open={isDoctorRegOpen}
-          onOpenChange={(open) => {
-            setIsDoctorRegOpen(open);
-            if (!open) resetForm();
-          }}
-        >
-          <DialogContent className="sm:max-w-lg max-h-[90vh] overflow-y-auto">
-            <DialogHeader>
-              <DialogTitle>Doctor Registration</DialogTitle>
-            </DialogHeader>
-            <div className="space-y-4">
-              <div>
-                <Label htmlFor="fullName">Full Name *</Label>
-                <Input
-                  id="fullName"
-                  value={formData.fullName}
-                  onChange={(e) => setFormData({...formData, fullName: e.target.value})}
-                  className="mt-1"
-                />
-              </div>
-
-              <div>
-                <Label>Date of Birth *</Label>
-                <Popover>
-                  <PopoverTrigger asChild>
-                    <Button
-                      variant="outline"
-                      className={cn(
-                        "w-full justify-start text-left font-normal mt-1",
-                        !formData.dateOfBirth && "text-muted-foreground"
-                      )}
-                    >
-                      <CalendarIcon className="mr-2 h-4 w-4" />
-                      {formData.dateOfBirth ? format(formData.dateOfBirth, "PPP") : "Pick a date"}
-                    </Button>
-                  </PopoverTrigger>
-                  <PopoverContent className="w-auto p-0">
-                    <div className="p-3 pointer-events-auto">
-                      <Calendar
-                        mode="single"
-                        selected={formData.dateOfBirth}
-                        onSelect={(date) => setFormData({...formData, dateOfBirth: date})}
-                        initialFocus
-                      />
-                    </div>
-                  </PopoverContent>
-                </Popover>
-              </div>
-
-              <div>
-                <Label>Gender *</Label>
-                <Select value={formData.gender} onValueChange={(value) => setFormData({...formData, gender: value})}>
-                  <SelectTrigger className="mt-1">
-                    <SelectValue placeholder="Select gender" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="Male">Male</SelectItem>
-                    <SelectItem value="Female">Female</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-
-              <div>
-                <Label htmlFor="address">Address *</Label>
-                <Textarea
-                  id="address"
-                  value={formData.address}
-                  onChange={(e) => setFormData({...formData, address: e.target.value})}
-                  className="mt-1"
-                  rows={3}
-                />
-              </div>
-
-              <div>
-                <Label htmlFor="department">Department *</Label>
-                <Input
-                  id="department"
-                  value={formData.department}
-                  onChange={(e) => setFormData({...formData, department: e.target.value})}
-                  className="mt-1"
-                />
-              </div>
-
-              <div>
-                <Label htmlFor="hospital">Current Hospital *</Label>
-                <Input
-                  id="hospital"
-                  value={formData.hospital}
-                  onChange={(e) => setFormData({...formData, hospital: e.target.value})}
-                  className="mt-1"
-                />
-              </div>
-
-              <div>
-                <Label htmlFor="licenseNumber">License Number *</Label>
-                <Input
-                  id="licenseNumber"
-                  value={formData.licenseNumber}
-                  onChange={(e) => setFormData({...formData, licenseNumber: e.target.value})}
-                  className="mt-1"
-                />
-              </div>
-
-              <div>
-                <Label htmlFor="email">Email (Optional)</Label>
-                <Input
-                  id="email"
-                  type="email"
-                  value={formData.email}
-                  onChange={(e) => setFormData({...formData, email: e.target.value})}
-                  className="mt-1"
-                />
-              </div>
-
-              <Button
-                onClick={handleDoctorRegistration}
-                disabled={
-                  !formData.fullName ||
-                  !formData.dateOfBirth ||
-                  !formData.gender ||
-                  !formData.address ||
-                  !formData.department ||
-                  !formData.hospital ||
-                  !formData.licenseNumber ||
-                  loading
-                }
-                className="w-full bg-[#14213D] hover:bg-[#14213D]/90"
-              >
-                {loading ? "Submitting..." : "Apply as Doctor"}
-              </Button>
-            </div>
-          </DialogContent>
-        </Dialog>
-
-        {/* Confirmation Dialog */}
-        <Dialog open={isConfirmationOpen} onOpenChange={setIsConfirmationOpen}>
-          <DialogContent className="sm:max-w-md">
-            <DialogHeader>
-              <DialogTitle>Registration Complete</DialogTitle>
-            </DialogHeader>
-            <div className="space-y-4">
-              <p className="text-sm text-gray-600">{confirmationMessage}</p>
-              <Button
-                onClick={() => {
-                  setIsConfirmationOpen(false);
-                  navigate("/");
-                }}
-                className="w-full bg-[#14213D] hover:bg-[#14213D]/90"
-              >
-                Continue to Dashboard
-              </Button>
-            </div>
-          </DialogContent>
-        </Dialog>
       </div>
     </div>
   );
