@@ -164,9 +164,7 @@ export function HomePage() {
                   <span style={{
                   color: '#45A06B'
                 }}>{t.siteNamePart2}</span>
-                  <span style={{
-                  color: '#D04B42'
-                }}>{t.siteNamePart3}</span>
+                  
                 </h1>
               </div>
             </div>
