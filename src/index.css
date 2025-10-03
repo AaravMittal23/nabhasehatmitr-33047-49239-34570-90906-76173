@@ -1,0 +1,252 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    /* Healthcare themed palette from logo */
+    --background: 0 0% 100%;
+    --foreground: 220 85% 15%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 220 85% 15%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 220 85% 15%;
+
+    /* Primary - Medical Blue (from Nabha) */
+    --primary: 220 85% 15%;
+    --primary-foreground: 0 0% 100%;
+    
+    /* Healthcare Green (from Sehat and heartbeat) */
+    --healthcare-green: 130 65% 45%;
+    --healthcare-green-foreground: 0 0% 100%;
+    
+    /* Medical Red (from Mitr and Emergency) */
+    --medical-red: 355 75% 55%;
+    --medical-red-foreground: 0 0% 100%;
+    
+    /* Coral accent (from handshake heart) */
+    --coral: 15 75% 70%;
+    --coral-foreground: 220 85% 15%;
+
+    --secondary: 210 40% 96%;
+    --secondary-foreground: 220 85% 15%;
+
+    --muted: 210 40% 95%;
+    --muted-foreground: 215 16% 47%;
+
+    --accent: 130 65% 95%;
+    --accent-foreground: 220 85% 15%;
+
+    --destructive: 355 75% 55%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 214 32% 91%;
+    --input: 214 32% 91%;
+    --ring: 130 65% 45%;
+
+    --radius: 0.5rem;
+
+    --sidebar-background: 0 0% 98%;
+
+    --sidebar-foreground: 240 5.3% 26.1%;
+
+    --sidebar-primary: 240 5.9% 10%;
+
+    --sidebar-primary-foreground: 0 0% 98%;
+
+    --sidebar-accent: 240 4.8% 95.9%;
+
+    --sidebar-accent-foreground: 240 5.9% 10%;
+
+    --sidebar-border: 220 13% 91%;
+
+    --sidebar-ring: 217.2 91.2% 59.8%;
+    
+    /* Custom colors for Find Doctor page */
+    --doctor-name: 212 100% 16%;  /* Dark navy #0a2540 */
+    --verified-green: 134 61% 41%;  /* Softer green #28a745 */
+    --appointment-button: 210 100% 20%;  /* #003366 */
+    --pharmacy-blue: 210 100% 20%;  /* #003366 for pharmacy buttons */
+    
+    /* Reports page colors */
+    --reports-cream: 60 25% 97%;  /* Light cream #FAFAF5 */
+    --reports-card: 120 50% 97%;  /* Light green tint #F4FFF4 */
+    --reports-card-border: 120 20% 88%;  /* Faint gray-green border */
+    --reports-view-button: 130 65% 45%;  /* Green for view button */
+    --reports-download-button: 210 100% 50%;  /* Blue for download button */
+  }
+
+  .dark {
+    --background: 220 85% 6%;
+    --foreground: 210 40% 98%;
+
+    --card: 220 80% 8%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 220 80% 8%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 130 65% 55%;
+    --primary-foreground: 220 85% 6%;
+    
+    --healthcare-green: 130 65% 55%;
+    --healthcare-green-foreground: 220 85% 6%;
+    
+    --medical-red: 355 75% 65%;
+    --medical-red-foreground: 220 85% 6%;
+    
+    --coral: 15 75% 75%;
+    --coral-foreground: 220 85% 6%;
+
+    --secondary: 220 30% 18%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 220 30% 18%;
+    --muted-foreground: 215 20% 65%;
+
+    --accent: 220 30% 18%;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 355 75% 65%;
+    --destructive-foreground: 220 85% 6%;
+
+    --border: 220 30% 18%;
+    --input: 220 30% 18%;
+    --ring: 130 65% 55%;
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans;
+  }
+}
+
+/* Healthcare themed animations and utilities */
+@layer utilities {
+  .text-healthcare-green {
+    color: hsl(var(--healthcare-green));
+  }
+  
+  .text-medical-red {
+    color: hsl(var(--medical-red));
+  }
+  
+  .text-coral {
+    color: hsl(var(--coral));
+  }
+  
+  .bg-healthcare-green {
+    background-color: hsl(var(--healthcare-green));
+  }
+  
+  .bg-medical-red {
+    background-color: hsl(var(--medical-red));
+  }
+  
+  .bg-coral {
+    background-color: hsl(var(--coral));
+  }
+  
+  .border-healthcare-green {
+    border-color: hsl(var(--healthcare-green));
+  }
+  
+  .border-medical-red {
+    border-color: hsl(var(--medical-red));
+  }
+
+  /* Smooth transitions for all interactive elements */
+  .transition-smooth {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  /* Menu slide animations */
+  .slide-down-enter {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  
+  .slide-down-enter-active {
+    transform: translateY(0);
+    opacity: 1;
+    transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+  }
+  
+  .slide-down-exit {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  
+  .slide-down-exit-active {
+    transform: translateY(-100%);
+    opacity: 0;
+    transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+  }
+  
+  /* Burger menu morphing animation */
+  .burger-line {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .burger-line.open:nth-child(1) {
+    transform: rotate(45deg) translate(6px, 6px);
+  }
+  
+  .burger-line.open:nth-child(2) {
+    opacity: 0;
+  }
+  
+  .burger-line.open:nth-child(3) {
+    transform: rotate(-45deg) translate(6px, -6px);
+  }
+  
+  /* Touch-friendly minimum sizes */
+  .touch-target {
+    min-width: 44px;
+    min-height: 44px;
+  }
+  
+  /* Custom Find Doctor page styles */
+  .text-doctor-name {
+    color: hsl(var(--doctor-name));
+  }
+  
+  .text-navy {
+    color: hsl(var(--doctor-name));
+  }
+  
+  .text-verified-green {
+    color: hsl(var(--verified-green));
+  }
+  
+  .bg-verified-green {
+    background-color: hsl(var(--verified-green));
+  }
+  
+  .bg-appointment-button {
+    background-color: hsl(var(--appointment-button));
+  }
+  
+  .hover\:bg-appointment-button:hover {
+    background-color: hsl(var(--appointment-button) / 0.9);
+  }
+}
