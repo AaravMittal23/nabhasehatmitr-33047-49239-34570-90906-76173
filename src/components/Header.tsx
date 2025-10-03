@@ -9,9 +9,9 @@ const headerTranslations = {
   en: {
     login: "Login / Sign up",
     emergency: "Emergency",
-    siteNamePart1: "Nabha",
-    siteNamePart2: "Sehat",
-    siteNamePart3: "Mitr",
+    siteNamePart1: "Health",
+    siteNamePart2: "Connect",
+    siteNamePart3: "",
     home: "Home",
     bookAppointment: "Book Appointment",
     pharmacies: "Pharmacies",
@@ -23,9 +23,9 @@ const headerTranslations = {
   hi: {
     login: "लॉगिन / साइन अप",
     emergency: "आपातकाल",
-    siteNamePart1: "नाभा",
-    siteNamePart2: "सहेत",
-    siteNamePart3: "मित्र",
+    siteNamePart1: "हेल्थ",
+    siteNamePart2: "कनेक्ट",
+    siteNamePart3: "",
     home: "होम",
     bookAppointment: "अपॉइंटमेंट बुक करें",
     pharmacies: "फार्मेसियां",
@@ -37,9 +37,9 @@ const headerTranslations = {
   pa: {
     login: "ਲਾਗਇਨ / ਸਾਈਨ ਅੱਪ",
     emergency: "ਐਮਰਜੈਂਸੀ",
-    siteNamePart1: "ਨਭਾ",
-    siteNamePart2: "ਸਿਹਤ",
-    siteNamePart3: "ਮਿਤ੍ਰ",
+    siteNamePart1: "ਹੈਲਥ",
+    siteNamePart2: "ਕਨੈਕਟ",
+    siteNamePart3: "",
     home: "ਘਰ",
     bookAppointment: "ਅਪਾਇੰਟਮੈਂਟ ਬੁੱਕ ਕਰੋ",
     pharmacies: "ਫਾਰਮੇਸੀ",
@@ -107,7 +107,7 @@ export function Header({
 
             {/* Center Logo and Title (for non-home pages) */}
             {showCenterLogo && <div className="flex items-center space-x-3 justify-center flex-1">
-                <img src={logo} alt="Nabha Sehat Mitr Logo" className="h-10 w-10 object-contain" />
+                <img src={logo} alt="Health Connect Logo" className="h-10 w-10 object-contain" />
                 <Link to="/" className="flex items-center">
                   <h1 className="text-lg sm:text-xl font-bold tracking-tight">
                     <span className="text-primary">{t.siteNamePart1}</span>

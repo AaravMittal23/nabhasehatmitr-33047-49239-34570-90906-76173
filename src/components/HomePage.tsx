@@ -164,7 +164,7 @@ export function HomePage() {
 
             {/* Logo and Site Title */}
             <div className="flex items-center justify-center space-x-4 mb-12">
-              <img src={logo} alt="Nabha Sehat Mitr Logo" className="h-20 w-20 object-contain" />
+              <img src={logo} alt="Health Connect Logo" className="h-20 w-20 object-contain" />
               <div className="flex items-center">
                 <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight">
                   <span style={{
@@ -249,7 +249,7 @@ export function HomePage() {
             {/* Logo and Description */}
             <div className="space-y-4">
               <div className="flex items-center space-x-3">
-                <img src={logo} alt="Nabha Sehat Mitr" className="h-10 w-10 object-contain" />
+                <img src={logo} alt="Health Connect" className="h-10 w-10 object-contain" />
                 <h3 className="text-xl font-bold">
                   <span style={{
                   color: '#0B2A4A'
