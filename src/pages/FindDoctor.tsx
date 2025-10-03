@@ -251,8 +251,16 @@ export default function FindDoctor() {
                         <div className="mb-4">
                           
                           <div className="flex flex-wrap gap-1">
-                            {doctor.availableSlots.slice(0, 4).map((slot, index) => {})}
-                            {doctor.availableSlots.length > 4}
+                            {doctor.availableSlots.slice(0, 4).map((slot, index) => (
+                              <span key={index} className="px-2 py-1 bg-accent text-xs rounded">
+                                {slot}
+                              </span>
+                            ))}
+                            {doctor.availableSlots.length > 4 && (
+                              <span className="px-2 py-1 text-xs text-muted-foreground">
+                                +{doctor.availableSlots.length - 4} more
+                              </span>
+                            )}
                           </div>
                         </div>
 

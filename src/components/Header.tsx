@@ -16,7 +16,9 @@ const headerTranslations = {
     bookAppointment: "Book Appointment",
     pharmacies: "Pharmacies",
     reports: "Reports",
-    contactUs: "Contact Us"
+    contactUs: "Contact Us",
+    calendar: "Calendar",
+    aboutUs: "About Us"
   },
   hi: {
     login: "लॉगिन / साइन अप",
@@ -28,7 +30,9 @@ const headerTranslations = {
     bookAppointment: "अपॉइंटमेंट बुक करें",
     pharmacies: "फार्मेसियां",
     reports: "रिपोर्ट्स",
-    contactUs: "संपर्क करें"
+    contactUs: "संपर्क करें",
+    calendar: "कैलेंडर",
+    aboutUs: "हमारे बारे में"
   },
   pa: {
     login: "ਲਾਗਇਨ / ਸਾਈਨ ਅੱਪ",
@@ -40,7 +44,9 @@ const headerTranslations = {
     bookAppointment: "ਅਪਾਇੰਟਮੈਂਟ ਬੁੱਕ ਕਰੋ",
     pharmacies: "ਫਾਰਮੇਸੀ",
     reports: "ਰਿਪੋਰਟਸ",
-    contactUs: "ਸਾਡੇ ਨਾਲ ਸੰਪਰਕ ਕਰੋ"
+    contactUs: "ਸਾਡੇ ਨਾਲ ਸੰਪਰਕ ਕਰੋ",
+    calendar: "ਕੈਲੰਡਰ",
+    aboutUs: "ਸਾਡੇ ਬਾਰੇ"
   }
 };
 const languages = [{
@@ -154,11 +160,17 @@ export function Header({
             <Link to="/find-doctor" className="block py-2 text-lg font-medium hover:text-healthcare-green transition-smooth">
               {t.bookAppointment}
             </Link>
+            <Link to="/calendar" className="block py-2 text-lg font-medium hover:text-healthcare-green transition-smooth">
+              {t.calendar}
+            </Link>
             <Link to="/reports" className="block py-2 text-lg font-medium hover:text-healthcare-green transition-smooth">
               {t.reports}
             </Link>
             <Link to="/contact" className="block py-2 text-lg font-medium hover:text-healthcare-green transition-smooth">
               {t.contactUs}
+            </Link>
+            <Link to="/about" className="block py-2 text-lg font-medium hover:text-healthcare-green transition-smooth">
+              {t.aboutUs}
             </Link>
             
             {/* Mobile-only login and emergency */}
