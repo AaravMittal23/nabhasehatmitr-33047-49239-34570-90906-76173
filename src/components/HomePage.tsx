@@ -293,15 +293,15 @@ export function HomePage() {
               <div className="space-y-3">
                 <div className="flex items-center space-x-3">
                   <Phone className="h-4 w-4 text-healthcare-green" />
-                  <span className="text-sm text-black">+91 87977 60111, +91 95137 31600</span>
+                  <span className="text-sm text-black">+91 8800852822, +91 9899489078</span>
                 </div>
                 <div className="flex items-center space-x-3">
                   <Mail className="h-4 w-4 text-healthcare-green" />
-                  <span className="text-sm text-black">contact@healthconnect.com</span>
+                  <span className="text-sm text-black">daamn32322@gmail.com</span>
                 </div>
                 <div className="flex items-center space-x-3">
                   <MapPin className="h-4 w-4 text-healthcare-green" />
-                  <span className="text-sm text-black">Nabha, Punjab, India</span>
+                  <span className="text-sm text-black">Chennai, Tamil Nadu, India</span>
                 </div>
               </div>
             </div>
