@@ -397,7 +397,7 @@ export default function PatientDashboard() {
                   <Phone className="h-4 w-4" style={{
                   color: '#45A06B'
                 }} />
-                  <span className="text-sm text-black">+91 87977 60111, +91 95137 31600</span>
+                  <span className="text-sm text-black">+91 8, +91 95137 31600</span>
                 </div>
                 <div className="flex items-center space-x-3">
                   <span className="h-4 w-4" style={{
