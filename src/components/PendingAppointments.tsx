@@ -119,7 +119,7 @@ export const PendingAppointments = () => {
       ))}
       
       <div className="text-center pt-4">
-        <Button variant="ghost" onClick={() => navigate('/find-doctor')} className="gap-2">
+        <Button onClick={() => navigate('/find-doctor')} className="gap-2 bg-primary text-primary-foreground hover:bg-primary/90">
           Book Another Appointment
           <ArrowRight className="h-4 w-4" />
         </Button>
