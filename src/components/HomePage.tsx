@@ -271,12 +271,8 @@ export function HomePage() {
                 <Link to="/contact" className="block text-sm text-black hover:text-healthcare-green transition-smooth">
                   {t.contactUs}
                 </Link>
-                <a href="#" className="block text-sm text-black hover:text-healthcare-green transition-smooth">
-                  {t.termsConditions}
-                </a>
-                <a href="#" className="block text-sm text-black hover:text-healthcare-green transition-smooth">
-                  {t.privacyPolicy}
-                </a>
+                
+                
                 <a href="#" className="block text-sm text-black hover:text-healthcare-green transition-smooth">
                   {t.helpSupport}
                 </a>
