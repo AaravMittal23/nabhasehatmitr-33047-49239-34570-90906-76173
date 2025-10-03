@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { Header } from "@/components/Header";
 import { useLanguage } from "@/hooks/useLanguage";
 import { supabase } from "@/integrations/supabase/client";
@@ -32,6 +33,7 @@ interface LabTest {
 }
 
 const Calendar = () => {
+  const navigate = useNavigate();
   const { currentLanguage, changeLanguage } = useLanguage();
   const { toast } = useToast();
   const [events, setEvents] = useState<CalendarEvent[]>([]);
@@ -41,6 +43,7 @@ const Calendar = () => {
   const [editingEvent, setEditingEvent] = useState<CalendarEvent | null>(null);
   const [editingLabTest, setEditingLabTest] = useState<LabTest | null>(null);
   const [userRole, setUserRole] = useState<'patient' | 'doctor' | null>(null);
+  const [loading, setLoading] = useState(true);
 
   const [eventForm, setEventForm] = useState<{
     title: string;
@@ -63,17 +66,27 @@ const Calendar = () => {
   });
 
   useEffect(() => {
-    checkAuth();
-    fetchUserRole();
-    fetchEvents();
-    fetchLabTests();
+    const initializeAuth = async () => {
+      const isAuthenticated = await checkAuth();
+      if (isAuthenticated) {
+        await Promise.all([
+          fetchUserRole(),
+          fetchEvents(),
+          fetchLabTests()
+        ]);
+      }
+      setLoading(false);
+    };
+    initializeAuth();
   }, []);
 
   const checkAuth = async () => {
     const { data: { session } } = await supabase.auth.getSession();
     if (!session) {
-      window.location.href = '/login';
+      navigate('/login');
+      return false;
     }
+    return true;
   };
 
   const fetchUserRole = async () => {
@@ -298,6 +311,21 @@ const Calendar = () => {
       default: return type;
     }
   };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-background">
+        <Header
+          currentLanguage={currentLanguage}
+          onLanguageChange={changeLanguage}
+          showCenterLogo
+        />
+        <main className="container mx-auto px-4 py-8">
+          <p className="text-center">Loading...</p>
+        </main>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-background">
