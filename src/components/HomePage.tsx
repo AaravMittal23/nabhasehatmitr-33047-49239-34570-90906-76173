@@ -273,9 +273,9 @@ export function HomePage() {
                 </Link>
                 
                 
-                <a href="#" className="block text-sm text-black hover:text-healthcare-green transition-smooth">
+                <Link to="/about" className="block text-sm text-black hover:text-healthcare-green transition-smooth">
                   {t.helpSupport}
-                </a>
+                </Link>
               </div>
             </div>
 

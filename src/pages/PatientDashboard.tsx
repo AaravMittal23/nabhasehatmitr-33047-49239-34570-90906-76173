@@ -387,7 +387,7 @@ export default function PatientDashboard() {
                 <a href="/contact" className="block text-sm text-black hover:text-healthcare-green transition-smooth">Contact Us</a>
                 
                 
-                <a href="#" className="block text-sm text-black hover:text-healthcare-green transition-smooth">Help & Support</a>
+                <a href="/about" className="block text-sm text-black hover:text-healthcare-green transition-smooth">Help & Support</a>
               </div>
             </div>
             <div className="space-y-4">
