@@ -148,7 +148,16 @@ export default function Emergency() {
                   </Button>
 
                   {/* Secondary Action */}
-                  {service.secondaryAction}
+                  {service.secondaryAction && (
+                    <Button
+                      onClick={service.secondaryAction.action}
+                      variant="outline"
+                      className="w-full h-12 font-medium"
+                      aria-label={service.secondaryAction.text}
+                    >
+                      {service.secondaryAction.text}
+                    </Button>
+                  )}
                 </CardContent>
               </Card>)}
           </div>
