@@ -13,9 +13,9 @@ import logo from "@/assets/logo.jpg";
 // Homepage-specific translations
 const homepageTranslations = {
   en: {
-    siteNamePart1: "Nabha",
-    siteNamePart2: "Sehat",
-    siteNamePart3: "Mitr",
+    siteNamePart1: "Health",
+    siteNamePart2: "Connect",
+    siteNamePart3: "",
     heroTitle: "Your Health, Our Priority",
     heroDescription: "Access comprehensive healthcare services — connect with verified doctors and manage medical records.",
     ctaPrimary: "Consult Available Physician",
@@ -44,9 +44,9 @@ const homepageTranslations = {
     helpSupport: "Help & Support"
   },
   hi: {
-    siteNamePart1: "नाभा",
-    siteNamePart2: "सहेत",
-    siteNamePart3: "मित्र",
+    siteNamePart1: "हेल्थ",
+    siteNamePart2: "कनेक्ट",
+    siteNamePart3: "",
     heroTitle: "आपका स्वास्थ्य, हमारी प्राथमिकता",
     heroDescription: "व्यापक स्वास्थ्य सेवाएँ — सत्यापित डॉक्टरों से जुड़ें और मेडिकल रिकॉर्ड प्रबंधित करें।",
     ctaPrimary: "उपलब्ध चिकित्सक से परामर्श",
@@ -75,9 +75,9 @@ const homepageTranslations = {
     helpSupport: "सहायता और समर्थन"
   },
   pa: {
-    siteNamePart1: "ਨਭਾ",
-    siteNamePart2: "ਸਿਹਤ",
-    siteNamePart3: "ਮਿਤ੍ਰ",
+    siteNamePart1: "ਹੈਲਥ",
+    siteNamePart2: "ਕਨੈਕਟ",
+    siteNamePart3: "",
     heroTitle: "ਤੁਹਾਡੀ ਸਿਹਤ, ਸਾਡੀ ਪ੍ਰਾਥਮਿਕਤਾ",
     heroDescription: "ਵਿਆਪਕ ਸਿਹਤ ਸੇਵਾਵਾਂ — ਪਕੀ ਕੀਤੇ ਡਾਕਟਰੀਂ ਨਾਲ ਜੁੜੋ ਅਤੇ ਮੈਡੀਕਲ ਰਿਕਾਰਡ ਸੰਭਾਲੋ।",
     ctaPrimary: "ਉਪਲਬਧ ਡਾਕਟਰ ਨਾਲ ਸਲਾਹ",
@@ -169,11 +169,10 @@ export function HomePage() {
                 <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight">
                   <span style={{
                   color: '#0B2A4A'
-                }}>{t.siteNamePart1}</span>
+                }}>{t.siteNamePart1} </span>
                   <span style={{
                   color: '#45A06B'
                 }}>{t.siteNamePart2}</span>
-                  
                 </h1>
               </div>
             </div>
@@ -254,13 +253,10 @@ export function HomePage() {
                 <h3 className="text-xl font-bold">
                   <span style={{
                   color: '#0B2A4A'
-                }}>{t.siteNamePart1}</span>
+                }}>{t.siteNamePart1} </span>
                   <span style={{
                   color: '#45A06B'
                 }}>{t.siteNamePart2}</span>
-                  <span style={{
-                  color: '#D04B42'
-                }}>{t.siteNamePart3}</span>
                 </h3>
               </div>
               <p className="text-sm text-black leading-relaxed">
