@@ -316,12 +316,7 @@ export default function PatientDashboard() {
                       <Calendar className="h-5 w-5" />
                       <span className="text-sm">Book Appointment</span>
                     </Button>
-                    <Button className="h-16 flex flex-col gap-1" style={{
-                    backgroundColor: '#0B2A4A'
-                  }}>
-                      <Stethoscope className="h-5 w-5" />
-                      <span className="text-sm">Consult Available Physician</span>
-                    </Button>
+                    
                   </div>
                 </CardContent>
               </Card>
