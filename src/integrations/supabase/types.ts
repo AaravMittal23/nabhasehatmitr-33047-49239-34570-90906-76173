@@ -14,115 +14,16 @@ export type Database = {
   }
   public: {
     Tables: {
-      calendar_events: {
-        Row: {
-          created_at: string
-          description: string | null
-          event_date: string
-          event_type: Database["public"]["Enums"]["event_type"]
-          id: string
-          linked_id: string | null
-          title: string
-          updated_at: string
-          user_id: string
-        }
-        Insert: {
-          created_at?: string
-          description?: string | null
-          event_date: string
-          event_type: Database["public"]["Enums"]["event_type"]
-          id?: string
-          linked_id?: string | null
-          title: string
-          updated_at?: string
-          user_id: string
-        }
-        Update: {
-          created_at?: string
-          description?: string | null
-          event_date?: string
-          event_type?: Database["public"]["Enums"]["event_type"]
-          id?: string
-          linked_id?: string | null
-          title?: string
-          updated_at?: string
-          user_id?: string
-        }
-        Relationships: []
-      }
-      lab_tests: {
-        Row: {
-          created_at: string
-          id: string
-          is_completed: boolean
-          notes: string | null
-          patient_id: string
-          report_url: string | null
-          test_date: string
-          test_name: string
-          updated_at: string
-        }
-        Insert: {
-          created_at?: string
-          id?: string
-          is_completed?: boolean
-          notes?: string | null
-          patient_id: string
-          report_url?: string | null
-          test_date: string
-          test_name: string
-          updated_at?: string
-        }
-        Update: {
-          created_at?: string
-          id?: string
-          is_completed?: boolean
-          notes?: string | null
-          patient_id?: string
-          report_url?: string | null
-          test_date?: string
-          test_name?: string
-          updated_at?: string
-        }
-        Relationships: []
-      }
-      user_roles: {
-        Row: {
-          created_at: string
-          id: string
-          role: Database["public"]["Enums"]["app_role"]
-          user_id: string
-        }
-        Insert: {
-          created_at?: string
-          id?: string
-          role: Database["public"]["Enums"]["app_role"]
-          user_id: string
-        }
-        Update: {
-          created_at?: string
-          id?: string
-          role?: Database["public"]["Enums"]["app_role"]
-          user_id?: string
-        }
-        Relationships: []
-      }
+      [_ in never]: never
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      has_role: {
-        Args: {
-          _role: Database["public"]["Enums"]["app_role"]
-          _user_id: string
-        }
-        Returns: boolean
-      }
+      [_ in never]: never
     }
     Enums: {
-      app_role: "patient" | "doctor"
-      event_type: "lab_test" | "doctor_appointment" | "review_appointment"
+      [_ in never]: never
     }
     CompositeTypes: {
       [_ in never]: never
@@ -249,9 +150,6 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {
-      app_role: ["patient", "doctor"],
-      event_type: ["lab_test", "doctor_appointment", "review_appointment"],
-    },
+    Enums: {},
   },
 } as const
