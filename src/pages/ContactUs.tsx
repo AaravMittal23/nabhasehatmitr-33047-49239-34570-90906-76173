@@ -11,50 +11,49 @@ import { useLanguage } from "@/hooks/useLanguage";
 import { useToast } from "@/hooks/use-toast";
 import { Phone, Mail, MapPin, AlertTriangle, CheckCircle } from "lucide-react";
 import logo from "@/assets/logo.jpg";
-
 interface ContactFormData {
   fullName: string;
   phone: string;
   queryType: string;
   message: string;
 }
-
 export default function ContactUs() {
-  const { currentLanguage, changeLanguage } = useLanguage();
-  const { toast } = useToast();
+  const {
+    currentLanguage,
+    changeLanguage
+  } = useLanguage();
+  const {
+    toast
+  } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
   const [showError, setShowError] = useState(false);
-
   const form = useForm<ContactFormData>({
     defaultValues: {
       fullName: "",
       phone: "",
       queryType: "",
-      message: "",
-    },
+      message: ""
+    }
   });
-
   const onSubmit = async (data: ContactFormData) => {
     setIsSubmitting(true);
     setShowSuccess(false);
     setShowError(false);
-
     try {
       const response = await fetch("https://backend-sih-v1au.onrender.com/api/contact", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
+          "Content-Type": "application/json"
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify(data)
       });
-
       if (response.ok) {
         setShowSuccess(true);
         form.reset();
         toast({
           title: "Message sent successfully!",
-          description: "We will reply within 48 hours.",
+          description: "We will reply within 48 hours."
         });
       } else {
         throw new Error("Failed to send message");
@@ -64,24 +63,17 @@ export default function ContactUs() {
       toast({
         title: "Failed to send message",
         description: "Please try again or email us directly.",
-        variant: "destructive",
+        variant: "destructive"
       });
     } finally {
       setIsSubmitting(false);
     }
   };
-
   const handleEmailClick = () => {
     window.open("mailto:nabhasehatmitr@gmail.com", "_blank");
   };
-
-  return (
-    <div className="min-h-screen bg-background">
-      <Header 
-        currentLanguage={currentLanguage}
-        onLanguageChange={changeLanguage}
-        showCenterLogo={true}
-      />
+  return <div className="min-h-screen bg-background">
+      <Header currentLanguage={currentLanguage} onLanguageChange={changeLanguage} showCenterLogo={true} />
 
       <main className="py-12 px-4 sm:px-6 lg:px-8">
         <div className="container mx-auto max-w-6xl">
@@ -103,87 +95,65 @@ export default function ContactUs() {
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  {showSuccess && (
-                    <div className="mb-6 p-4 bg-healthcare-green/10 border border-healthcare-green/20 rounded-lg flex items-center space-x-3">
+                  {showSuccess && <div className="mb-6 p-4 bg-healthcare-green/10 border border-healthcare-green/20 rounded-lg flex items-center space-x-3">
                       <CheckCircle className="h-5 w-5 text-healthcare-green" />
                       <p className="text-healthcare-green font-medium">
                         Thanks — your message has been sent. We will reply within 48 hours.
                       </p>
-                    </div>
-                  )}
+                    </div>}
 
-                  {showError && (
-                    <div className="mb-6 p-4 bg-destructive/10 border border-destructive/20 rounded-lg">
+                  {showError && <div className="mb-6 p-4 bg-destructive/10 border border-destructive/20 rounded-lg">
                       <p className="text-destructive font-medium mb-3">
                         Contact service is temporarily unavailable. Please email us at nabhasehatmitr@gmail.com
                       </p>
-                      <Button 
-                        onClick={handleEmailClick}
-                        className="bg-primary hover:bg-primary/90 text-white"
-                      >
+                      <Button onClick={handleEmailClick} className="bg-primary hover:bg-primary/90 text-white">
                         Send Email
                       </Button>
-                    </div>
-                  )}
+                    </div>}
 
                   <Form {...form}>
                     <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
                       {/* Full Name */}
-                      <FormField
-                        control={form.control}
-                        name="fullName"
-                        rules={{ required: "Full name is required" }}
-                        render={({ field }) => (
-                          <FormItem>
+                      <FormField control={form.control} name="fullName" rules={{
+                      required: "Full name is required"
+                    }} render={({
+                      field
+                    }) => <FormItem>
                             <FormLabel className="text-primary font-medium">Full Name</FormLabel>
                             <FormControl>
                               <Input placeholder="Enter your full name" {...field} />
                             </FormControl>
                             <FormMessage />
-                          </FormItem>
-                        )}
-                      />
+                          </FormItem>} />
 
                       {/* Phone */}
-                      <FormField
-                        control={form.control}
-                        name="phone"
-                        rules={{ 
-                          required: "Phone number is required",
-                          pattern: {
-                            value: /^[0-9]{10}$/,
-                            message: "Please enter a valid 10-digit phone number"
-                          }
-                        }}
-                        render={({ field }) => (
-                          <FormItem>
+                      <FormField control={form.control} name="phone" rules={{
+                      required: "Phone number is required",
+                      pattern: {
+                        value: /^[0-9]{10}$/,
+                        message: "Please enter a valid 10-digit phone number"
+                      }
+                    }} render={({
+                      field
+                    }) => <FormItem>
                             <FormLabel className="text-primary font-medium">Phone</FormLabel>
                             <FormControl>
                               <div className="flex">
                                 <div className="flex items-center px-3 border border-r-0 border-input bg-muted rounded-l-md">
                                   <span className="text-sm text-muted-foreground">+91</span>
                                 </div>
-                                <Input 
-                                  type="tel"
-                                  placeholder="1234567890" 
-                                  className="rounded-l-none"
-                                  maxLength={10}
-                                  {...field} 
-                                />
+                                <Input type="tel" placeholder="1234567890" className="rounded-l-none" maxLength={10} {...field} />
                               </div>
                             </FormControl>
                             <FormMessage />
-                          </FormItem>
-                        )}
-                      />
+                          </FormItem>} />
 
                       {/* Type of Query */}
-                      <FormField
-                        control={form.control}
-                        name="queryType"
-                        rules={{ required: "Please select a query type" }}
-                        render={({ field }) => (
-                          <FormItem>
+                      <FormField control={form.control} name="queryType" rules={{
+                      required: "Please select a query type"
+                    }} render={({
+                      field
+                    }) => <FormItem>
                             <FormLabel className="text-primary font-medium">Type of Query</FormLabel>
                             <Select onValueChange={field.onChange} defaultValue={field.value}>
                               <FormControl>
@@ -198,36 +168,23 @@ export default function ContactUs() {
                               </SelectContent>
                             </Select>
                             <FormMessage />
-                          </FormItem>
-                        )}
-                      />
+                          </FormItem>} />
 
                       {/* Message */}
-                      <FormField
-                        control={form.control}
-                        name="message"
-                        rules={{ required: "Message is required" }}
-                        render={({ field }) => (
-                          <FormItem>
+                      <FormField control={form.control} name="message" rules={{
+                      required: "Message is required"
+                    }} render={({
+                      field
+                    }) => <FormItem>
                             <FormLabel className="text-primary font-medium">Message</FormLabel>
                             <FormControl>
-                              <Textarea 
-                                placeholder="Please provide details about your query or concern..."
-                                className="min-h-[120px]"
-                                {...field} 
-                              />
+                              <Textarea placeholder="Please provide details about your query or concern..." className="min-h-[120px]" {...field} />
                             </FormControl>
                             <FormMessage />
-                          </FormItem>
-                        )}
-                      />
+                          </FormItem>} />
 
                       {/* Submit Button */}
-                      <Button
-                        type="submit"
-                        disabled={isSubmitting}
-                        className="w-full bg-primary hover:bg-primary/90 text-white py-3 text-lg font-medium"
-                      >
+                      <Button type="submit" disabled={isSubmitting} className="w-full bg-primary hover:bg-primary/90 text-white py-3 text-lg font-medium">
                         {isSubmitting ? "Sending..." : "Submit Message"}
                       </Button>
                     </form>
@@ -249,8 +206,8 @@ export default function ContactUs() {
                   <div className="flex items-center space-x-3">
                     <Phone className="h-5 w-5 text-healthcare-green" />
                     <div>
-                      <p className="font-medium text-primary">Amritanshu Aditya</p>
-                      <p className="text-muted-foreground">8797760111</p>
+                      <p className="font-medium text-primary">Mahathi T </p>
+                      <p className="text-muted-foreground">9949645198</p>
                     </div>
                   </div>
                   
@@ -266,7 +223,7 @@ export default function ContactUs() {
                     <Mail className="h-5 w-5 text-healthcare-green" />
                     <div>
                       <p className="font-medium text-primary">Email</p>
-                      <p className="text-muted-foreground">nabhasehatmitr@gmail.com</p>
+                      <p className="text-muted-foreground">Daamn32322@gmail.com</p>
                     </div>
                   </div>
                   
@@ -274,7 +231,7 @@ export default function ContactUs() {
                     <MapPin className="h-5 w-5 text-healthcare-green" />
                     <div>
                       <p className="font-medium text-primary">Address</p>
-                      <p className="text-muted-foreground">Nabha, Punjab, India</p>
+                      <p className="text-muted-foreground">Chennai, Tamil Nadu, India</p>
                     </div>
                   </div>
                 </CardContent>
@@ -309,11 +266,7 @@ export default function ContactUs() {
             {/* Logo and Description */}
             <div className="space-y-4">
               <div className="flex items-center space-x-3">
-                <img
-                  src={logo}
-                  alt="Nabha Sehat Mitr"
-                  className="h-10 w-10 object-contain"
-                />
+                <img src={logo} alt="Nabha Sehat Mitr" className="h-10 w-10 object-contain" />
                 <h3 className="text-xl font-bold">
                   <span className="text-primary">Nabha</span>
                   <span className="text-healthcare-green">Sehat</span>
@@ -372,6 +325,5 @@ export default function ContactUs() {
           </div>
         </div>
       </footer>
-    </div>
-  );
+    </div>;
 }
