@@ -355,22 +355,8 @@ export default function PatientDashboard() {
 
               {/* Reminders */}
               <Card>
-                <CardHeader>
-                  <CardTitle className="text-base">Reminders & Alerts</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-3">
-                    <div className="p-3 bg-orange-50 border border-orange-200 rounded-lg">
-                      <p className="text-sm font-medium text-orange-800">Medicine Reminder</p>
-                      <p className="text-xs text-orange-600">Lisinopril - Evening dose in 2 hours</p>
-                    </div>
-                    <div className="p-3 bg-blue-50 border border-blue-200 rounded-lg">
-                      <p className="text-sm font-medium text-blue-800">Appointment Reminder</p>
-                      <p className="text-xs text-blue-600">Dr. Meera Sharma - Tomorrow 10:00 AM</p>
-                    </div>
-                    
-                  </div>
-                </CardContent>
+                
+                
               </Card>
 
             </div>
