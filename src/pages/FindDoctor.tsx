@@ -251,16 +251,12 @@ export default function FindDoctor() {
                         <div className="mb-4">
                           
                           <div className="flex flex-wrap gap-1">
-                            {doctor.availableSlots.slice(0, 4).map((slot, index) => (
-                              <span key={index} className="px-2 py-1 bg-accent text-xs rounded">
+                            {doctor.availableSlots.slice(0, 4).map((slot, index) => <span key={index} className="px-2 py-1 bg-accent text-xs rounded">
                                 {slot}
-                              </span>
-                            ))}
-                            {doctor.availableSlots.length > 4 && (
-                              <span className="px-2 py-1 text-xs text-muted-foreground">
+                              </span>)}
+                            {doctor.availableSlots.length > 4 && <span className="px-2 py-1 text-xs text-muted-foreground">
                                 +{doctor.availableSlots.length - 4} more
-                              </span>
-                            )}
+                              </span>}
                           </div>
                         </div>
 
@@ -378,8 +374,8 @@ export default function FindDoctor() {
               <h4 className="text-lg font-semibold text-black">Quick Links</h4>
               <div className="space-y-2">
                 <a href="/contact" className="block text-sm text-black hover:text-healthcare-green transition-smooth">Contact Us</a>
-                <a href="#" className="block text-sm text-black hover:text-healthcare-green transition-smooth">Terms & Conditions</a>
-                <a href="#" className="block text-sm text-black hover:text-healthcare-green transition-smooth">Privacy Policy</a>
+                
+                
                 <a href="#" className="block text-sm text-black hover:text-healthcare-green transition-smooth">Help & Support</a>
               </div>
             </div>
@@ -390,19 +386,19 @@ export default function FindDoctor() {
                   <Phone className="h-4 w-4" style={{
                   color: '#45A06B'
                 }} />
-                  <span className="text-sm text-black">+91 87977 60111, +91 95137 31600</span>
+                  <span className="text-sm text-black">+91 8800852822, +91 9899489078</span>
                 </div>
                 <div className="flex items-center space-x-3">
                   <span className="h-4 w-4" style={{
                   color: '#45A06B'
                 }}>@</span>
-                  <span className="text-sm text-black">contact@healthconnect.com</span>
+                  <span className="text-sm text-black">daamn32322@gmail.com</span>
                 </div>
                 <div className="flex items-center space-x-3">
                   <MapPin className="h-4 w-4" style={{
                   color: '#45A06B'
                 }} />
-                  <span className="text-sm text-black">Nabha, Punjab, India</span>
+                  <span className="text-sm text-black">Chennai, Tamil Nadu, India</span>
                 </div>
               </div>
             </div>
