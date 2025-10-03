@@ -70,7 +70,7 @@ export default function ContactUs() {
     }
   };
   const handleEmailClick = () => {
-    window.open("mailto:nabhasehatmitr@gmail.com", "_blank");
+    window.open("mailto:contact@healthconnect.com", "_blank");
   };
   return <div className="min-h-screen bg-background">
       <Header currentLanguage={currentLanguage} onLanguageChange={changeLanguage} showCenterLogo={true} />
@@ -104,7 +104,7 @@ export default function ContactUs() {
 
                   {showError && <div className="mb-6 p-4 bg-destructive/10 border border-destructive/20 rounded-lg">
                       <p className="text-destructive font-medium mb-3">
-                        Contact service is temporarily unavailable. Please email us at nabhasehatmitr@gmail.com
+                        Contact service is temporarily unavailable. Please email us at contact@healthconnect.com
                       </p>
                       <Button onClick={handleEmailClick} className="bg-primary hover:bg-primary/90 text-white">
                         Send Email
@@ -308,7 +308,7 @@ export default function ContactUs() {
                 </div>
                 <div className="flex items-center space-x-3">
                   <Mail className="h-4 w-4 text-healthcare-green" />
-                  <span className="text-sm text-black">nabhasehatmitr@gmail.com</span>
+                  <span className="text-sm text-black">contact@healthconnect.com</span>
                 </div>
                 <div className="flex items-center space-x-3">
                   <MapPin className="h-4 w-4 text-healthcare-green" />
@@ -320,7 +320,7 @@ export default function ContactUs() {
 
           <div className="border-t border-muted-foreground/20 mt-12 pt-8">
             <div className="text-center text-sm text-black">
-              <p>&copy; 2025 NabhaSehatMitr. All rights reserved. | Providing quality healthcare services to Nabha and Punjab.</p>
+              <p>&copy; 2025 HealthConnect. All rights reserved. | Providing quality healthcare services.</p>
             </div>
           </div>
         </div>

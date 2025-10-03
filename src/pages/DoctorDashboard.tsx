@@ -523,7 +523,7 @@ export default function DoctorDashboard() {
                   <span className="h-4 w-4" style={{
                   color: '#45A06B'
                 }}>@</span>
-                  <span className="text-sm text-black">nabhasehatmitr@gmail.com</span>
+                  <span className="text-sm text-black">contact@healthconnect.com</span>
                 </div>
                 <div className="flex items-center space-x-3">
                   <MapPin className="h-4 w-4" style={{
@@ -536,7 +536,7 @@ export default function DoctorDashboard() {
           </div>
           <div className="border-t border-muted-foreground/20 mt-12 pt-8">
             <div className="text-center text-sm text-black">
-              <p>&copy; 2025 NabhaSehatMitr. All rights reserved. | Providing quality healthcare services to Nabha and Punjab.</p>
+              <p>&copy; 2025 HealthConnect. All rights reserved. | Providing quality healthcare services.</p>
             </div>
           </div>
         </div>

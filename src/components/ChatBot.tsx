@@ -31,7 +31,7 @@ const RobotIcon = ({ className }: { className?: string }) => (
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
     role="img"
-    aria-label="NabhaSehatMitr assistant"
+    aria-label="HealthConnect assistant"
   >
     {/* Robot head */}
     <rect
@@ -550,7 +550,7 @@ export function ChatBot() {
         className="fixed bottom-4 right-4 z-50 transition-all duration-200 hover:scale-106 hover:shadow-lg cursor-pointer"
         onClick={() => setIsOpen(!isOpen)}
         role="button"
-        aria-label="Open NabhaSehatMitr assistant chat"
+        aria-label="Open HealthConnect assistant chat"
       >
         <div className="relative">
           <div className="w-14 h-14 md:w-16 md:h-16 bg-white rounded-full shadow-lg border-2 border-gray-200 flex items-center justify-center">

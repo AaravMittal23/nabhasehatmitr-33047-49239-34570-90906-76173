@@ -173,7 +173,7 @@ export default function Reports() {
                   <span className="text-sm text-black">+91 87977 60111, +91 95137 31600</span>
                 </div>
                 <div className="flex items-center space-x-3">
-                  <span className="text-sm text-black">nabhasehatmitr@gmail.com</span>
+                  <span className="text-sm text-black">contact@healthconnect.com</span>
                 </div>
                 <div className="flex items-center space-x-3">
                   <span className="text-sm text-black">Nabha, Punjab, India</span>
@@ -184,7 +184,7 @@ export default function Reports() {
 
           <div className="border-t border-muted-foreground/20 mt-12 pt-8">
             <div className="text-center text-sm text-black">
-              <p>&copy; 2025 NabhaSehatMitr. All rights reserved. | Providing quality healthcare services to Nabha and Punjab.</p>
+              <p>&copy; 2025 HealthConnect. All rights reserved. | Providing quality healthcare services.</p>
             </div>
           </div>
         </div>

@@ -258,9 +258,9 @@ export default function LoginSignup() {
         <Card className="w-full max-w-lg">
           <CardHeader className="text-center pt-8 pb-6">
             <div className="flex justify-center mb-4">
-              <img src={logo} alt="NabhaSehatMitr Logo" className="h-16 w-16 object-cover rounded-full" />
+              <img src={logo} alt="HealthConnect Logo" className="h-16 w-16 object-cover rounded-full" />
             </div>
-            <h1 className="text-2xl font-bold mb-2">Welcome to NABHASEHATMITR</h1>
+            <h1 className="text-2xl font-bold mb-2">Welcome to HealthConnect</h1>
             <p className="text-muted-foreground">Login or create an account to continue</p>
           </CardHeader>
 
