@@ -92,7 +92,7 @@ const Calendar = () => {
   const fetchUserRole = async () => {
     const { data: { user } } = await supabase.auth.getUser();
     if (user) {
-      const { data } = await supabase
+      const { data } = await (supabase as any)
         .from('user_roles')
         .select('role')
         .eq('user_id', user.id)
@@ -104,7 +104,7 @@ const Calendar = () => {
   };
 
   const fetchEvents = async () => {
-    const { data, error } = await supabase
+    const { data, error } = await (supabase as any)
       .from('calendar_events')
       .select('*')
       .order('event_date', { ascending: true });
@@ -120,7 +120,7 @@ const Calendar = () => {
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) return;
 
-    const { data, error } = await supabase
+    const { data, error } = await (supabase as any)
       .from('lab_tests')
       .select('*')
       .eq('patient_id', user.id)
@@ -138,7 +138,7 @@ const Calendar = () => {
     if (!user) return;
 
     if (editingEvent) {
-      const { error } = await supabase
+      const { error } = await (supabase as any)
         .from('calendar_events')
         .update({
           title: eventForm.title,
@@ -156,7 +156,7 @@ const Calendar = () => {
         closeEventDialog();
       }
     } else {
-      const { error } = await supabase
+      const { error } = await (supabase as any)
         .from('calendar_events')
         .insert({
           user_id: user.id,
@@ -177,7 +177,7 @@ const Calendar = () => {
   };
 
   const handleDeleteEvent = async (id: string) => {
-    const { error } = await supabase
+    const { error } = await (supabase as any)
       .from('calendar_events')
       .delete()
       .eq('id', id);
@@ -195,7 +195,7 @@ const Calendar = () => {
     if (!user) return;
 
     if (editingLabTest) {
-      const { error } = await supabase
+      const { error } = await (supabase as any)
         .from('lab_tests')
         .update({
           test_name: labTestForm.test_name,
@@ -214,7 +214,7 @@ const Calendar = () => {
         closeLabTestDialog();
       }
     } else {
-      const { error } = await supabase
+      const { error } = await (supabase as any)
         .from('lab_tests')
         .insert({
           patient_id: user.id,
@@ -236,7 +236,7 @@ const Calendar = () => {
   };
 
   const handleDeleteLabTest = async (id: string) => {
-    const { error } = await supabase
+    const { error } = await (supabase as any)
       .from('lab_tests')
       .delete()
       .eq('id', id);
