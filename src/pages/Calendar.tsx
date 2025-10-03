@@ -12,7 +12,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Calendar as CalendarIcon, Plus, Edit, Trash2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-import { format } from "date-fns";
+import { format, isSameDay } from "date-fns";
+import { Calendar as CalendarUI } from "@/components/ui/calendar";
 interface CalendarEvent {
   id: string;
   title: string;
@@ -421,11 +422,69 @@ const Calendar = () => {
           </Dialog>
         </div>
 
-        {userRole === 'patient'}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+          <Card>
+            <CardHeader>
+              <CardTitle>Calendar View</CardTitle>
+            </CardHeader>
+            <CardContent className="flex justify-center">
+              <CalendarUI
+                mode="single"
+                className="rounded-md border"
+                modifiers={{
+                  eventDate: events.map(event => new Date(event.event_date))
+                }}
+                modifiersClassNames={{
+                  eventDate: "bg-healthcare-green text-white hover:bg-healthcare-green hover:text-white font-bold rounded-full"
+                }}
+              />
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>Upcoming Events</CardTitle>
+            </CardHeader>
+            <CardContent className="max-h-[400px] overflow-y-auto">
+              {events.length === 0 ? (
+                <p className="text-muted-foreground text-center py-4">No events found</p>
+              ) : (
+                <div className="space-y-3">
+                  {events.slice(0, 5).map(event => (
+                    <Card key={event.id}>
+                      <CardContent className="p-4">
+                        <div className="flex items-start justify-between">
+                          <div className="flex-1">
+                            <h3 className="font-semibold">{event.title}</h3>
+                            <p className="text-sm text-muted-foreground">
+                              {format(new Date(event.event_date), "PPP p")}
+                            </p>
+                            <p className="text-sm text-primary mt-1">
+                              {getEventTypeLabel(event.event_type)}
+                            </p>
+                            {event.description && <p className="text-sm mt-2">{event.description}</p>}
+                          </div>
+                          <div className="flex gap-2">
+                            <Button variant="ghost" size="sm" onClick={() => openEventDialog(event)}>
+                              <Edit className="h-4 w-4" />
+                            </Button>
+                            <Button variant="ghost" size="sm" onClick={() => handleDeleteEvent(event.id)}>
+                              <Trash2 className="h-4 w-4" />
+                            </Button>
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
+              )}
+            </CardContent>
+          </Card>
+        </div>
 
         <Card>
           <CardHeader>
-            <CardTitle>My Events</CardTitle>
+            <CardTitle>All Events</CardTitle>
           </CardHeader>
           <CardContent>
             {events.length === 0 ? <p className="text-muted-foreground text-center py-4">No events found</p> : <div className="space-y-3">
