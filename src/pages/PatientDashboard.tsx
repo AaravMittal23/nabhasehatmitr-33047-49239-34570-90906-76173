@@ -291,12 +291,7 @@ export default function PatientDashboard() {
                               </div>
                             </div>
                             <div className="flex gap-2">
-                              {appointment.hasCallLink && <Button size="sm" onClick={() => handleJoinCall(appointment.id)} style={{
-                            backgroundColor: '#45A06B'
-                          }} className="text-white hover:opacity-90">
-                                  <Video className="h-4 w-4 mr-1" />
-                                  Join Call
-                                </Button>}
+                              {appointment.hasCallLink}
                               <Button variant="outline" size="sm" onClick={() => handleCancelAppointment(appointment.id)}>
                                 Cancel
                               </Button>
