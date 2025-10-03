@@ -354,10 +354,7 @@ export default function PatientDashboard() {
               </Card>
 
               {/* Reminders */}
-              <Card>
-                
-                
-              </Card>
+              
 
             </div>
           </div>
