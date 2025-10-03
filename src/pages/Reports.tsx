@@ -123,12 +123,8 @@ export default function Reports() {
                 <a href="#" className="block text-sm text-black hover:text-healthcare-green transition-smooth">
                   About Us
                 </a>
-                <a href="#" className="block text-sm text-black hover:text-healthcare-green transition-smooth">
-                  Terms & Conditions
-                </a>
-                <a href="#" className="block text-sm text-black hover:text-healthcare-green transition-smooth">
-                  Privacy Policy
-                </a>
+                
+                
                 <a href="#" className="block text-sm text-black hover:text-healthcare-green transition-smooth">
                   Help & Support
                 </a>
