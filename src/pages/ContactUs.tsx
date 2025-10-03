@@ -286,12 +286,8 @@ export default function ContactUs() {
                 <a href="/contact" className="block text-sm text-black hover:text-healthcare-green transition-smooth">
                   Contact Us
                 </a>
-                <a href="#" className="block text-sm text-black hover:text-healthcare-green transition-smooth">
-                  Terms & Conditions
-                </a>
-                <a href="#" className="block text-sm text-black hover:text-healthcare-green transition-smooth">
-                  Privacy Policy
-                </a>
+                
+                
                 <a href="#" className="block text-sm text-black hover:text-healthcare-green transition-smooth">
                   Help & Support
                 </a>
