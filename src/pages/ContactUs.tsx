@@ -272,10 +272,10 @@ export default function ContactUs() {
                   <span className="text-healthcare-green">Connect</span>
                 </h3>
               </div>
-              <p className="text-sm text-black leading-relaxed">
-                Your trusted healthcare companion, providing quality medical services 
-                and support for the people of Nabha and Punjab.
-              </p>
+              <p className="text-sm text-black leading-relaxed">Access comprehensive healthcare services — connect with verified doctors and manage medical records.
+
+
+            </p>
             </div>
 
             {/* Quick Links */}
