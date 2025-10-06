@@ -204,7 +204,7 @@ export function HomePage() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               <ServiceCard icon={Stethoscope} title={t.findDoctorsTitle} description={t.findDoctorsDescription} buttonText={t.findDoctorsCta} onClick={() => navigate('/find-doctor')} />
               
-              <ServiceCard icon={AlertTriangle} title={t.emergencyTitle} description={t.emergencyDescription} buttonText={t.emergencyCta} onClick={() => navigate('/emergency')} variant="emergency" />
+              <ServiceCard icon={AlertTriangle} title={t.emergencyTitle} description={t.emergencyDescription} buttonText={t.emergencyCta} onClick={() => window.location.href = 'tel:108'} variant="emergency" />
               
               <ServiceCard icon={FileText} title={t.healthRecordsTitle} description={t.healthRecordsDescription} buttonText={t.healthRecordsCta} onClick={() => navigate('/reports')} variant="health-records" />
               
