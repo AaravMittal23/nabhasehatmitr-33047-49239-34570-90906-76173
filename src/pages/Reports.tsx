@@ -110,10 +110,9 @@ export default function Reports() {
                   <span className="text-healthcare-green">Connect</span>
                 </h3>
               </div>
-              <p className="text-sm text-black leading-relaxed">Access comprehensive healthcare services — connect with verified doctors and manage medical records.
-
-
-            </p>
+              <p className="text-sm text-black leading-relaxed">
+                Your trusted healthcare companion in Nabha and Punjab. Find doctors, access emergency services, and manage your health records - all in one place.
+              </p>
             </div>
 
             {/* Quick Links */}

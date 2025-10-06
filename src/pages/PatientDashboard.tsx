@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Edit, Phone, Calendar, Clock, Video, AudioLines, X, Plus, Eye, Download, MapPin, Pill, FileText, User, Stethoscope, LogOut } from "lucide-react";
+import { Edit, Phone, Calendar, Clock, Video, AudioLines, X, Plus, Eye, Download, MapPin, Pill, FileText, User, Stethoscope } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -11,8 +11,6 @@ import { useToast } from "@/hooks/use-toast";
 import { Badge } from "@/components/ui/badge";
 import { Textarea } from "@/components/ui/textarea";
 import { useNavigate } from "react-router-dom";
-import { supabase } from "@/integrations/supabase/client";
-
 interface Appointment {
   id: string;
   doctorName: string;
@@ -176,28 +174,10 @@ export default function PatientDashboard() {
       description: "Your appointment has been cancelled (demo)"
     });
   };
-
-  const handleLogout = async () => {
-    await supabase.auth.signOut();
-    toast({
-      title: "Logged out",
-      description: "You have been successfully logged out"
-    });
-    navigate('/');
-  };
-
   return <div className="min-h-screen bg-background">
       <Header currentLanguage={currentLanguage} onLanguageChange={changeLanguage} showCenterLogo={true} />
 
       <main className="py-8 px-4 sm:px-6 lg:px-8">
-        <div className="container mx-auto max-w-7xl mb-4">
-          <div className="flex justify-end">
-            <Button variant="outline" size="sm" onClick={handleLogout}>
-              <LogOut className="h-4 w-4 mr-2" />
-              Logout
-            </Button>
-          </div>
-        </div>
         <div className="container mx-auto max-w-7xl">
           
           {/* Page Title */}
