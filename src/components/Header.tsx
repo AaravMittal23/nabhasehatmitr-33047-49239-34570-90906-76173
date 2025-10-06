@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { User, AlertTriangle, Menu, X, Globe } from "lucide-react";
+import { User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import logo from "@/assets/logo.jpg";
@@ -97,11 +97,10 @@ export function Header({
                   </Link>
                 </Button>}
 
-              <Button variant="ghost" size="sm" className="touch-target transition-smooth hover:bg-destructive/10 text-medical-red hover:text-medical-red" aria-label="Emergency services - call for immediate help" asChild>
-                <Link to="/emergency">
-                  <AlertTriangle className="h-4 w-4 mr-2 text-medical-red" />
-                  <span className="text-sm font-medium text-medical-red">{t.emergency}</span>
-                </Link>
+              <Button variant="ghost" size="sm" className="touch-target transition-smooth hover:bg-destructive/10 text-medical-red hover:text-medical-red" aria-label="Call ambulance" asChild>
+                <a href="tel:108">
+                  <span className="text-sm font-medium text-medical-red">Ambulance</span>
+                </a>
               </Button>
             </div>
 
@@ -182,11 +181,10 @@ export function Header({
                   </Link>
                 </Button>}
               
-              <Button variant="outline" className="w-full justify-start touch-target border-medical-red text-medical-red hover:bg-medical-red hover:text-white" aria-label="Emergency services - call for immediate help" asChild>
-                <Link to="/emergency">
-                  <AlertTriangle className="h-4 w-4 mr-2" />
-                  {t.emergency}
-                </Link>
+              <Button variant="outline" className="w-full justify-start touch-target border-medical-red text-medical-red hover:bg-medical-red hover:text-white" aria-label="Call ambulance" asChild>
+                <a href="tel:108">
+                  Ambulance
+                </a>
               </Button>
             </div>
           </nav>
