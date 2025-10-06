@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Edit, Phone, Calendar, Clock, Video, AudioLines, X, Plus, Users, Award, CheckCircle, RotateCcw } from "lucide-react";
+import { Edit, Phone, Calendar, Clock, Video, AudioLines, X, Plus, Users, Award, CheckCircle, RotateCcw, LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -11,6 +11,9 @@ import { useToast } from "@/hooks/use-toast";
 import { Badge } from "@/components/ui/badge";
 import { Textarea } from "@/components/ui/textarea";
 import { MapPin } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+import { useNavigate } from "react-router-dom";
+
 interface DoctorProfile {
   name: string;
   phone: string;
@@ -40,6 +43,7 @@ export default function DoctorDashboard() {
   const {
     toast
   } = useToast();
+  const navigate = useNavigate();
 
   // Demo doctor data
   const [doctorData, setDoctorData] = useState<DoctorProfile>({
@@ -176,11 +180,29 @@ export default function DoctorDashboard() {
       return total + Math.floor(diffMinutes / 15); // 15-minute slots
     }, 0);
   };
+
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+    toast({
+      title: "Logged out",
+      description: "You have been successfully logged out"
+    });
+    navigate('/');
+  };
+
   const todaysAppointments = appointments.filter(apt => apt.time >= "00:00");
   return <div className="min-h-screen bg-background">
       <Header currentLanguage={currentLanguage} onLanguageChange={changeLanguage} showCenterLogo={true} />
 
       <main className="py-8 px-4 sm:px-6 lg:px-8">
+        <div className="container mx-auto max-w-7xl mb-4">
+          <div className="flex justify-end">
+            <Button variant="outline" size="sm" onClick={handleLogout}>
+              <LogOut className="h-4 w-4 mr-2" />
+              Logout
+            </Button>
+          </div>
+        </div>
         <div className="container mx-auto max-w-7xl">
           
           {/* Page Title */}
