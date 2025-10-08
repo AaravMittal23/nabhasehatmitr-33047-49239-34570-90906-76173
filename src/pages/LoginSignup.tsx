@@ -19,11 +19,11 @@ export default function LoginSignup() {
   const [loading, setLoading] = useState(false);
   
   // Login form
-  const [loginEmail, setLoginEmail] = useState("");
+  const [loginPhone, setLoginPhone] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
   
   // Signup form
-  const [signupEmail, setSignupEmail] = useState("");
+  const [signupPhone, setSignupPhone] = useState("");
   const [signupPassword, setSignupPassword] = useState("");
   const [signupRole, setSignupRole] = useState<"patient" | "doctor">("patient");
 
@@ -55,7 +55,7 @@ export default function LoginSignup() {
 
     try {
       const { data, error } = await supabase.auth.signInWithPassword({
-        email: loginEmail,
+        phone: loginPhone,
         password: loginPassword,
       });
 
@@ -99,11 +99,8 @@ export default function LoginSignup() {
     try {
       // Sign up the user
       const { data, error } = await supabase.auth.signUp({
-        email: signupEmail,
+        phone: signupPhone,
         password: signupPassword,
-        options: {
-          emailRedirectTo: `${window.location.origin}/`,
-        },
       });
 
       if (error) throw error;
@@ -127,7 +124,7 @@ export default function LoginSignup() {
         });
 
         // Switch to login tab
-        setLoginEmail(signupEmail);
+        setLoginPhone(signupPhone);
         setLoginPassword(signupPassword);
       }
     } catch (error: any) {
@@ -274,13 +271,13 @@ export default function LoginSignup() {
               <TabsContent value="login" className="space-y-4 mt-4">
                 <form onSubmit={handleLogin} className="space-y-4">
                   <div>
-                    <Label htmlFor="login-email">Email</Label>
+                    <Label htmlFor="login-phone">Phone Number</Label>
                     <Input
-                      id="login-email"
-                      type="email"
-                      placeholder="Enter your email"
-                      value={loginEmail}
-                      onChange={(e) => setLoginEmail(e.target.value)}
+                      id="login-phone"
+                      type="tel"
+                      placeholder="Enter your phone number (e.g., +1234567890)"
+                      value={loginPhone}
+                      onChange={(e) => setLoginPhone(e.target.value)}
                       required
                       className="mt-1"
                     />
@@ -312,13 +309,13 @@ export default function LoginSignup() {
               <TabsContent value="signup" className="space-y-4 mt-4">
                 <form onSubmit={handleSignup} className="space-y-4">
                   <div>
-                    <Label htmlFor="signup-email">Email</Label>
+                    <Label htmlFor="signup-phone">Phone Number</Label>
                     <Input
-                      id="signup-email"
-                      type="email"
-                      placeholder="Enter your email"
-                      value={signupEmail}
-                      onChange={(e) => setSignupEmail(e.target.value)}
+                      id="signup-phone"
+                      type="tel"
+                      placeholder="Enter your phone number (e.g., +1234567890)"
+                      value={signupPhone}
+                      onChange={(e) => setSignupPhone(e.target.value)}
                       required
                       className="mt-1"
                     />
